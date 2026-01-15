@@ -88,6 +88,22 @@ module Minicrest
       Minicrest::RespondsTo.new(*methods)
     end
 
+    # Factory method for starts_with() matcher.
+    #
+    # @param prefix [String] the expected prefix
+    # @return [StartsWith] string prefix matcher
+    def starts_with(prefix)
+      Minicrest::StartsWith.new(prefix)
+    end
+
+    # Factory method for ends_with() matcher.
+    #
+    # @param suffix [String] the expected suffix
+    # @return [EndsWith] string suffix matcher
+    def ends_with(suffix)
+      Minicrest::EndsWith.new(suffix)
+    end
+
     # Factory method for never() combinator.
     #
     # Use this to negate any matcher.
