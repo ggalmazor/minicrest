@@ -54,8 +54,9 @@ module Minicrest
     # @param actual [Object] the value that was checked
     # @return [String] detailed message showing both object ids
     def failure_message(actual)
-      "expected #{actual.inspect} (object_id: #{actual.object_id}) " \
-        "to be the same object as #{@expected.inspect} (object_id: #{@expected.object_id})"
+      <<~MSG.chomp
+        expected #{actual.inspect} (object_id: #{actual.object_id}) to be the same object as #{@expected.inspect} (object_id: #{@expected.object_id})
+      MSG
     end
 
     # Returns the failure message when a negated match fails.
@@ -63,8 +64,9 @@ module Minicrest
     # @param actual [Object] the value that was checked
     # @return [String] message indicating unexpected reference equality
     def negated_failure_message(actual)
-      "expected #{actual.inspect} (object_id: #{actual.object_id}) " \
-        "not to be the same object as #{@expected.inspect}, but they are the same object"
+      <<~MSG.chomp
+        expected #{actual.inspect} (object_id: #{actual.object_id}) not to be the same object as #{@expected.inspect}, but they are the same object
+      MSG
     end
   end
 

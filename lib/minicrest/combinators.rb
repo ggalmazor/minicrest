@@ -101,10 +101,12 @@ module Minicrest
     # @param actual [Object] the value that was checked
     # @return [String] message indicating unexpected match of both
     def negated_failure_message(actual)
-      "expected #{actual.inspect} not to match both conditions:\n  " \
-        "#{@left.description}\n  " \
-        "#{@right.description}\n" \
-        'but it matched both'
+      <<~MSG.chomp
+        expected #{actual.inspect} not to match both conditions:
+          #{@left.description}
+          #{@right.description}
+        but it matched both
+      MSG
     end
   end
 
@@ -144,12 +146,14 @@ module Minicrest
     # @param actual [Object] the value that was checked
     # @return [String] message indicating neither matcher matched
     def failure_message(actual)
-      "expected #{actual.inspect} to match at least one of:\n  " \
-        "#{@left.description}\n  " \
-        "#{@right.description}\n" \
-        "but it matched neither:\n  " \
-        "#{@left.failure_message(actual)}\n  " \
-        "#{@right.failure_message(actual)}"
+      <<~MSG.chomp
+        expected #{actual.inspect} to match at least one of:
+          #{@left.description}
+          #{@right.description}
+        but it matched neither:
+          #{@left.failure_message(actual)}
+          #{@right.failure_message(actual)}
+      MSG
     end
 
     # Returns the failure message when a negated match fails.
@@ -161,8 +165,10 @@ module Minicrest
       matched << @left.description if @left.matches?(actual)
       matched << @right.description if @right.matches?(actual)
 
-      "expected #{actual.inspect} not to match either condition, but it matched:\n  " \
-        "#{matched.join("\n  ")}"
+      <<~MSG.chomp
+        expected #{actual.inspect} not to match either condition, but it matched:
+          #{matched.join("\n  ")}
+      MSG
     end
   end
 
@@ -201,10 +207,12 @@ module Minicrest
     # @return [String] message indicating which matcher(s) failed
     def failure_message(actual)
       failed = @matchers.reject { |m| m.matches?(actual) }
-      "expected #{actual.inspect} to match all of:\n  " \
-        "#{@matchers.map(&:description).join("\n  ")}\n" \
-        "but failed:\n  " \
-        "#{failed.map { |m| m.failure_message(actual) }.join("\n  ")}"
+      <<~MSG.chomp
+        expected #{actual.inspect} to match all of:
+          #{@matchers.map(&:description).join("\n  ")}
+        but failed:
+          #{failed.map { |m| m.failure_message(actual) }.join("\n  ")}
+      MSG
     end
 
     # Returns the failure message when a negated match fails.
@@ -212,8 +220,10 @@ module Minicrest
     # @param actual [Object] the value that was checked
     # @return [String] message indicating unexpected match of all
     def negated_failure_message(actual)
-      "expected #{actual.inspect} not to match all conditions, but it matched all:\n  " \
-        "#{@matchers.map(&:description).join("\n  ")}"
+      <<~MSG.chomp
+        expected #{actual.inspect} not to match all conditions, but it matched all:
+          #{@matchers.map(&:description).join("\n  ")}
+      MSG
     end
   end
 
@@ -252,10 +262,12 @@ module Minicrest
     # @return [String] message indicating which matcher(s) matched
     def failure_message(actual)
       matched = @matchers.select { |m| m.matches?(actual) }
-      "expected #{actual.inspect} to match none of:\n  " \
-        "#{@matchers.map(&:description).join("\n  ")}\n" \
-        "but matched:\n  " \
-        "#{matched.map(&:description).join("\n  ")}"
+      <<~MSG.chomp
+        expected #{actual.inspect} to match none of:
+          #{@matchers.map(&:description).join("\n  ")}
+        but matched:
+          #{matched.map(&:description).join("\n  ")}
+      MSG
     end
 
     # Returns the failure message when a negated match fails.
@@ -263,9 +275,11 @@ module Minicrest
     # @param actual [Object] the value that was checked
     # @return [String] message indicating unexpected match of none
     def negated_failure_message(actual)
-      "expected #{actual.inspect} to match at least one of:\n  " \
-        "#{@matchers.map(&:description).join("\n  ")}\n" \
-        'but matched none'
+      <<~MSG.chomp
+        expected #{actual.inspect} to match at least one of:
+          #{@matchers.map(&:description).join("\n  ")}
+        but matched none
+      MSG
     end
   end
 
@@ -303,10 +317,12 @@ module Minicrest
     # @param actual [Object] the value that was checked
     # @return [String] message indicating no matchers matched
     def failure_message(actual)
-      "expected #{actual.inspect} to match at least one of:\n  " \
-        "#{@matchers.map(&:description).join("\n  ")}\n" \
-        "but matched none:\n  " \
-        "#{@matchers.map { |m| m.failure_message(actual) }.join("\n  ")}"
+      <<~MSG.chomp
+        expected #{actual.inspect} to match at least one of:
+          #{@matchers.map(&:description).join("\n  ")}
+        but matched none:
+          #{@matchers.map { |m| m.failure_message(actual) }.join("\n  ")}
+      MSG
     end
 
     # Returns the failure message when a negated match fails.
@@ -315,8 +331,10 @@ module Minicrest
     # @return [String] message indicating which matcher(s) matched
     def negated_failure_message(actual)
       matched = @matchers.select { |m| m.matches?(actual) }
-      "expected #{actual.inspect} to match none of the conditions, but matched:\n  " \
-        "#{matched.map(&:description).join("\n  ")}"
+      <<~MSG.chomp
+        expected #{actual.inspect} to match none of the conditions, but matched:
+          #{matched.map(&:description).join("\n  ")}
+      MSG
     end
   end
 end
