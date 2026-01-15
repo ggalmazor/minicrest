@@ -2,6 +2,57 @@
 
 This plan follows strict TDD: write a failing test first, write minimal code to pass, refactor, commit after every green cycle.
 
+---
+
+## Phase 0: Custom Matcher API (Priority)
+
+Enable end users to define their own custom matchers by subclassing `Minicrest::Matcher` and registering factory methods.
+
+See [custom-matchers-plan.md](custom-matchers-plan.md) for detailed design.
+
+### 0.1 Registration API
+
+Allow users to register custom matcher classes with factory methods:
+
+```ruby
+# User defines a matcher class
+class GreaterThan < Minicrest::Matcher
+  def initialize(expected)
+    super()
+    @expected = expected
+  end
+
+  def matches?(actual)
+    actual > @expected
+  end
+
+  def description
+    "greater than #{@expected.inspect}"
+  end
+end
+
+# Register it
+Minicrest.register_matcher(:greater_than) { |expected| GreaterThan.new(expected) }
+
+# Use in tests
+assert_that(5).matches(greater_than(3))
+```
+
+TDD cycles:
+- [ ] Test `Minicrest.register_matcher` defines method on Assertions module
+- [ ] Test registered matcher is callable from test including Assertions
+- [ ] Test registered matcher works with `assert_that().matches()`
+- [ ] Test registered matcher works with combinators (`&`, `|`)
+- [ ] Test registering multiple matchers
+- [ ] Test error handling for invalid registration (no block, etc.)
+
+### 0.2 Documentation
+
+- [ ] Add custom matcher examples to README
+- [ ] Document class-based approach with examples
+
+---
+
 ## Phase 1: Type and Method Matchers
 
 Simple matchers that check object types and capabilities.
@@ -457,7 +508,8 @@ TDD cycles:
 
 ## Implementation Order Rationale
 
-1. **Type/Method matchers first**: Simple, no dependencies, useful for later tests
+0. **Custom Matcher API first**: Enables extensibility, may require architectural changes that affect all other matchers. Users can then implement their own matchers while we build out the standard library.
+1. **Type/Method matchers**: Simple, no dependencies, useful for later tests
 2. **String matchers**: Self-contained, straightforward
 3. **Size/emptiness**: Foundation for collection matchers
 4. **Numeric comparisons**: Useful for `has_size` with matcher
@@ -466,3 +518,4 @@ TDD cycles:
 7. **Membership**: Alternative syntax, lower priority
 8. **Object attributes**: Composes with value matchers
 9. **Error assertions**: Requires block handling, most complex
+10. **Technical improvements**: Address existing TODOs and technical debt

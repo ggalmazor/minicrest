@@ -46,6 +46,35 @@
 #
 module Minicrest
   class Error < StandardError; end
+
+  class << self
+    # Registers a custom matcher factory method on the Assertions module.
+    #
+    # @param name [Symbol] the name of the factory method
+    # @yield [*args] block that creates the matcher instance
+    # @raise [ArgumentError] if no block is provided
+    # @raise [Minicrest::Error] if the matcher name is already registered
+    #
+    # @example
+    #   Minicrest.register_matcher(:greater_than) { |expected| GreaterThan.new(expected) }
+    def register_matcher(name, &block)
+      raise ArgumentError, 'block required' unless block_given?
+
+      if registered_matchers.include?(name.to_sym)
+        raise Error, "matcher :#{name} is already registered"
+      end
+
+      registered_matchers << name.to_sym
+      Assertions.define_method(name, &block)
+    end
+
+    # Returns the list of registered custom matcher names.
+    #
+    # @return [Array<Symbol>] registered matcher names
+    def registered_matchers
+      @registered_matchers ||= []
+    end
+  end
 end
 
 require_relative "minicrest/matcher"
