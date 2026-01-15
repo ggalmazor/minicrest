@@ -79,6 +79,7 @@ end
 
 require_relative "minicrest/matcher"
 require_relative "minicrest/is"
+require_relative "minicrest/is_a"
 require_relative "minicrest/equals"
 require_relative "minicrest/anything"
 require_relative "minicrest/combinators"

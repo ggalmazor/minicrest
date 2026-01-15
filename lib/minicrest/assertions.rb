@@ -72,6 +72,14 @@ module Minicrest
       Minicrest::Is.new(expected)
     end
 
+    # Factory method for is_a() matcher.
+    #
+    # @param expected_type [Class, Module] the expected type
+    # @return [IsA] type matcher
+    def is_a(expected_type)
+      Minicrest::IsA.new(expected_type)
+    end
+
     # Factory method for never() combinator.
     #
     # Use this to negate any matcher.
