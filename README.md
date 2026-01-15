@@ -10,6 +10,7 @@ Hamcrest-style composable matchers for Minitest. Write expressive, readable asse
 - Reference equality testing
 - Logical combinators: `all_of`, `none_of`, `some_of`
 - Descriptive failure messages that pinpoint exactly what went wrong
+- Extensible: create and register your own custom matchers
 
 ## Installation
 
@@ -108,6 +109,74 @@ Use `anything` when you don't care about a particular value:
 assert_that(some_value).matches(anything)
 ```
 
+## Custom Matchers
+
+Create your own matchers by subclassing `Minicrest::Matcher`:
+
+```ruby
+class BePositive < Minicrest::Matcher
+  def matches?(actual)
+    actual.is_a?(Numeric) && actual > 0
+  end
+
+  def description
+    "be positive"
+  end
+
+  def failure_message(actual)
+    "expected #{actual.inspect} to be a positive number"
+  end
+end
+
+# Register the matcher
+Minicrest.register_matcher(:be_positive) { BePositive.new }
+
+# Use in tests
+assert_that(5).matches(be_positive)
+```
+
+### Parameterized Matchers
+
+Matchers can accept arguments:
+
+```ruby
+class BeGreaterThan < Minicrest::Matcher
+  def initialize(expected)
+    super()
+    @expected = expected
+  end
+
+  def matches?(actual)
+    actual > @expected
+  end
+
+  def description
+    "be greater than #{@expected.inspect}"
+  end
+end
+
+Minicrest.register_matcher(:be_greater_than) { |expected| BeGreaterThan.new(expected) }
+
+# Use in tests
+assert_that(10).matches(be_greater_than(5))
+```
+
+### Custom Matchers with Combinators
+
+Registered matchers automatically work with all combinators:
+
+```ruby
+# With AND/OR operators
+assert_that(10).matches(be_greater_than(5) & be_greater_than(3))
+assert_that(10).matches(be_greater_than(100) | be_greater_than(5))
+
+# With never()
+assert_that(3).never(be_greater_than(5))
+
+# With all_of, some_of, none_of
+assert_that(10).matches(all_of(be_positive, be_greater_than(5)))
+```
+
 ## Failure Messages
 
 Minicrest provides detailed failure messages with diffs:
@@ -160,6 +229,12 @@ Diff:
 | `all_of(*matchers)`                  | All matchers must match              |
 | `none_of(*matchers)`                 | No matcher should match              |
 | `some_of(*matchers)`                 | At least one matcher must match      |
+
+### Module Methods
+
+| Method                                  | Description                               |
+|-----------------------------------------|-------------------------------------------|
+| `Minicrest.register_matcher(name, &block)` | Register a custom matcher factory method |
 
 ### Asserter Methods
 
