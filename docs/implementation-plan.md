@@ -39,17 +39,17 @@ assert_that(5).matches(greater_than(3))
 ```
 
 TDD cycles:
-- [ ] Test `Minicrest.register_matcher` defines method on Assertions module
-- [ ] Test registered matcher is callable from test including Assertions
-- [ ] Test registered matcher works with `assert_that().matches()`
-- [ ] Test registered matcher works with combinators (`&`, `|`)
-- [ ] Test registering multiple matchers
-- [ ] Test error handling for invalid registration (no block, etc.)
+- [x] Test `Minicrest.register_matcher` defines method on Assertions module
+- [x] Test registered matcher is callable from test including Assertions
+- [x] Test registered matcher works with `assert_that().matches()`
+- [x] Test registered matcher works with combinators (`&`, `|`)
+- [x] Test registering multiple matchers
+- [x] Test error handling for invalid registration (no block, etc.)
 
 ### 0.2 Documentation
 
-- [ ] Add custom matcher examples to README
-- [ ] Document class-based approach with examples
+- [x] Add custom matcher examples to README
+- [x] Document class-based approach with examples
 
 ---
 
