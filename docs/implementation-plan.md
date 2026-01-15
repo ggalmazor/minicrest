@@ -101,10 +101,10 @@ assert_that("hello world").matches(starts_with("hello"))
 ```
 
 TDD cycles:
-- [ ] Test matching prefix
-- [ ] Test non-matching prefix
-- [ ] Test empty prefix (always matches)
-- [ ] Test failure message
+- [x] Test matching prefix
+- [x] Test non-matching prefix
+- [x] Test empty prefix (always matches)
+- [x] Test failure message
 
 ### 2.2 `ends_with(suffix)`
 
@@ -115,10 +115,10 @@ assert_that("hello world").matches(ends_with("world"))
 ```
 
 TDD cycles:
-- [ ] Test matching suffix
-- [ ] Test non-matching suffix
-- [ ] Test empty suffix (always matches)
-- [ ] Test failure message
+- [x] Test matching suffix
+- [x] Test non-matching suffix
+- [x] Test empty suffix (always matches)
+- [x] Test failure message
 
 ### 2.3 `matches_pattern(regex)`
 
@@ -130,10 +130,10 @@ assert_that("test@example.com").matches(matches_pattern(/\A[\w.]+@[\w.]+\z/))
 ```
 
 TDD cycles:
-- [ ] Test simple pattern match
-- [ ] Test pattern with anchors
-- [ ] Test non-matching pattern
-- [ ] Test failure message shows pattern
+- [x] Test simple pattern match
+- [x] Test pattern with anchors
+- [x] Test non-matching pattern
+- [x] Test failure message shows pattern
 
 ### 2.4 `blank`
 
@@ -146,10 +146,10 @@ assert_that("\t\n").matches(blank)
 ```
 
 TDD cycles:
-- [ ] Test empty string
-- [ ] Test whitespace-only string
-- [ ] Test non-blank string fails
-- [ ] Test nil handling (decide: match or raise?)
+- [x] Test empty string
+- [x] Test whitespace-only string
+- [x] Test non-blank string fails
+- [x] Test nil handling (skipped - not applicable for strings)
 
 ## Phase 3: Size and Emptiness Matchers
 
