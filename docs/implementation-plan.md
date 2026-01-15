@@ -68,10 +68,10 @@ assert_that([]).matches(is_a(Enumerable))
 ```
 
 TDD cycles:
-- [ ] Test exact class match (`String`, `Integer`, `Array`, `Hash`)
-- [ ] Test inheritance match (subclass matches parent)
-- [ ] Test module inclusion match (`Enumerable`, `Comparable`)
-- [ ] Test failure message describes expected vs actual type
+- [x] Test exact class match (`String`, `Integer`, `Array`, `Hash`)
+- [x] Test inheritance match (subclass matches parent)
+- [x] Test module inclusion match (`Enumerable`, `Comparable`)
+- [x] Test failure message describes expected vs actual type
 
 ### 1.2 `responds_to(*methods)`
 
@@ -83,10 +83,10 @@ assert_that([]).matches(responds_to(:push, :pop))
 ```
 
 TDD cycles:
-- [ ] Test single method
-- [ ] Test multiple methods (all must respond)
-- [ ] Test failure when method missing
-- [ ] Test failure message lists missing methods
+- [x] Test single method
+- [x] Test multiple methods (all must respond)
+- [x] Test failure when method missing
+- [x] Test failure message lists missing methods
 
 ## Phase 2: String Matchers
 
