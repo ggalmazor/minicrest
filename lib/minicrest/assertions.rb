@@ -104,6 +104,21 @@ module Minicrest
       Minicrest::EndsWith.new(suffix)
     end
 
+    # Factory method for matches_pattern() matcher.
+    #
+    # @param pattern [Regexp] the expected pattern
+    # @return [MatchesPattern] regex pattern matcher
+    def matches_pattern(pattern)
+      Minicrest::MatchesPattern.new(pattern)
+    end
+
+    # Factory method for blank() matcher.
+    #
+    # @return [Blank] blank string matcher
+    def blank
+      Minicrest::Blank.new
+    end
+
     # Factory method for never() combinator.
     #
     # Use this to negate any matcher.
