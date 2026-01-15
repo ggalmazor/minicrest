@@ -80,6 +80,14 @@ module Minicrest
       Minicrest::IsA.new(expected_type)
     end
 
+    # Factory method for responds_to() matcher.
+    #
+    # @param methods [Array<Symbol>] the methods to check for
+    # @return [RespondsTo] method presence matcher
+    def responds_to(*methods)
+      Minicrest::RespondsTo.new(*methods)
+    end
+
     # Factory method for never() combinator.
     #
     # Use this to negate any matcher.

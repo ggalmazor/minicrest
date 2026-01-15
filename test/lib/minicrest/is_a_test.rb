@@ -66,10 +66,12 @@ describe Minicrest::IsA do
   describe '#failure_message' do
     it 'shows expected and actual types' do
       matcher = is_a(String)
-      message = matcher.failure_message(42)
 
-      assert_includes message, 'String'
-      assert_includes message, 'Integer'
+      assert_equal matcher.failure_message(42), <<~MSG.chomp
+        expected 42
+              to be an instance of String
+        but was Integer
+      MSG
     end
   end
 

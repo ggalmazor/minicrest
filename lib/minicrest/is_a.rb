@@ -41,8 +41,11 @@ module Minicrest
     # @param actual [Object] the value that was checked
     # @return [String] message showing expected vs actual type
     def failure_message(actual)
-      "expected #{actual.inspect} to be an instance of #{@expected_type}, " \
-        "but was #{actual.class}"
+      <<~MSG.chomp
+        expected #{actual.inspect}
+              to be an instance of #{@expected_type}
+        but was #{actual.class}
+      MSG
     end
 
     # Returns the failure message when a negated match fails.
@@ -50,8 +53,11 @@ module Minicrest
     # @param actual [Object] the value that was checked
     # @return [String] message indicating unexpected type match
     def negated_failure_message(actual)
-      "expected #{actual.inspect} not to be an instance of #{@expected_type}, " \
-        "but it is"
+      <<~MSG.chomp
+        expected #{actual.inspect}
+              not to be an instance of #{@expected_type}
+        but it is
+      MSG
     end
   end
 end
