@@ -14,31 +14,31 @@ Review and edit this list before implementation. Remove or modify items as neede
 
 **Proposed**: Create `ComparisonMatcher` base class that accepts operator and description.
 
-- [ ] Implement
+- [X] Implement
 
 ---
 
 ### 1.2 Extract CollectionItemMatcher base class
-
+``
 **Files affected**: `all_items.rb`, `some_items.rb`, `no_items.rb`
 
 **Current state**: Three files with identical constructor and similar structure.
 
 **Proposed**: Create base class with shared `@item_matcher` initialization and description helpers.
 
-- [ ] Implement
+- [X] Implement
 
 ---
 
 ### 1.3 Extract StringMatcher base class
-
+``
 **Files affected**: `starts_with.rb`, `ends_with.rb`
 
 **Current state**: Nearly identical implementations differing in method called (`start_with?` vs `end_with?`).
 
 **Proposed**: Create base class or use template method pattern.
 
-- [ ] Implement
+- [X] Implement
 
 ---
 
@@ -58,7 +58,7 @@ Review and edit this list before implementation. Remove or modify items as neede
 assert_that({a: 1, b: 2}).matches(all_entries(->(k, v) { v.is_a?(Integer) }))
 ```
 
-- [ ] Implement
+- [X] Implement
 
 ---
 
@@ -73,7 +73,7 @@ assert_that(5).matches(between(1, 10))
 assert_that(5).matches(between(1, 10, exclusive: true))  # optional
 ```
 
-- [ ] Implement
+- [X] Implement
 
 ---
 
@@ -101,7 +101,9 @@ assert_that(result).matches(truthy)   # anything except nil/false
 assert_that(result).matches(falsy)    # nil or false
 ```
 
-- [ ] Implement
+- [X] Implement
+
+Notes: it should be usable as `is(truthly)` or `is(falsy)`
 
 ---
 
@@ -114,7 +116,7 @@ assert_that("hello").matches(instance_of(String))     # passes
 assert_that(StandardError.new).matches(instance_of(Exception))  # fails (is subclass)
 ```
 
-- [ ] Implement
+- [X] Implement
 
 ---
 
@@ -135,7 +137,7 @@ def matches?(actual)
 end
 ```
 
-- [ ] Implement
+- [X] Implement
 
 ---
 
@@ -147,7 +149,7 @@ end
 
 **Proposed**: Better error messages for type mismatches.
 
-- [ ] Implement
+- [X] Implement
 
 ---
 
@@ -159,7 +161,7 @@ end
 
 **Proposed**: Check for expected type/interface before operating.
 
-- [ ] Implement
+- [X] Implement
 
 ---
 
@@ -174,7 +176,9 @@ end
 - Rename to `a` or `an` (`assert_that(x).matches(a(String))`)
 - Rename to `is_type` or `of_type`
 
-- [ ] Decide and implement (if changing)
+- [X] Decide and implement (if changing)
+
+Notes: rename to `descends_from`
 
 ---
 
@@ -183,13 +187,16 @@ end
 **Current**: Only `equals()` and `is()` have direct Asserter methods.
 
 **Proposed**: Add shortcuts for frequently used matchers:
+
 ```ruby
-assert_that(value).is_a(String)        # instead of .matches(is_a(String))
-assert_that(value).includes("foo")     # instead of .matches(includes("foo"))
-assert_that(value).is_greater_than(5)  # instead of .matches(is_greater_than(5))
+assert_that(value).descends_from(String) # instead of .matches(descends_from(String))
+assert_that(value).includes("foo") # instead of .matches(includes("foo"))
+assert_that(value).is_greater_than(5) # instead of .matches(is_greater_than(5))
 ```
 
-- [ ] Implement
+- [X] Implement
+
+Notes: ensure all matches have shortcuts in `Asserter`
 
 ---
 
@@ -199,7 +206,9 @@ assert_that(value).is_greater_than(5)  # instead of .matches(is_greater_than(5))
 
 **Proposed**: Ensure consistent naming throughout docs and API.
 
-- [ ] Review and update
+- [X] Review and update
+
+Notes: We should always use `never()` for negation, in any context.
 
 ---
 
@@ -209,7 +218,7 @@ assert_that(value).is_greater_than(5)  # instead of .matches(is_greater_than(5))
 
 **Files missing docs**: `equals.rb`, `is.rb` (flagged by RuboCop, currently excluded)
 
-- [ ] Add documentation
+- [X] Add documentation
 
 ---
 
@@ -217,7 +226,7 @@ assert_that(value).is_greater_than(5)  # instead of .matches(is_greater_than(5))
 
 **Proposed**: Link related matchers in documentation (e.g., `is_a` references `instance_of`).
 
-- [ ] Implement
+- [X] Implement
 
 ---
 

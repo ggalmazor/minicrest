@@ -18,10 +18,11 @@ Gemspec/RequiredRubyVersion:
   Enabled: false
 
 # Matcher factory methods intentionally use is_/has_ prefixes for readability
-# e.g., is_a(), has_size(), is_greater_than() - these are Hamcrest conventions
+# e.g., descends_from(), has_size(), is_greater_than() - these are Hamcrest conventions
 Naming/PredicatePrefix:
   Exclude:
     - 'lib/minicrest/assertions.rb'
+    - 'lib/minicrest/asserter.rb'
     - 'lib/minicrest/has_attribute.rb'
 
 # Diff methods are inherently complex but readable as-is
