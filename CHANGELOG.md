@@ -7,10 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.4] - 2026-01-17
+
+- Housekeeping: tuning the publish GH workflow for automated releases to Rubygems
+- Housekeeping: add bundler gem tasks to Rakefile for automated releases
+
 ## [1.0.3] - 2026-01-17
 
 - Housekeeping: tuning the publish GH workflow for automated releases to Rubygems
-- 
+
 ## [1.0.2] - 2026-01-17
 
 - Housekeeping: add version to published yard docs
