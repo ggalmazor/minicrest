@@ -431,13 +431,13 @@ assert_that(user).matches(has_attribute(:age, is_greater_than(18)))
 ```
 
 TDD cycles:
-- [ ] Test attribute exists (no value matcher)
-- [ ] Test attribute with value matcher
-- [ ] Test missing attribute fails
-- [ ] Test attribute value mismatch fails
-- [ ] Test works with OpenStruct
-- [ ] Test works with regular objects with attr_reader
-- [ ] Test works with hashes (symbol keys)
+- [x] Test attribute exists (no value matcher)
+- [x] Test attribute with value matcher
+- [x] Test missing attribute fails
+- [x] Test attribute value mismatch fails
+- [x] Test works with OpenStruct
+- [x] Test works with regular objects with attr_reader
+- [x] Test works with hashes (symbol keys)
 
 ## Phase 9: Error Assertions
 
