@@ -481,33 +481,6 @@ TDD cycles:
 - [ ] Ensure all existing tests pass
 - [ ] Verify failure message format is preserved
 
-### 10.2 Improve error message alignment
-
-Location: `test/lib/minicrest/asserter_test.rb:101`
-
-The nested "to equal ..." in combinator failure messages should align with the end of "expected 44" for better readability.
-
-Current:
-```
-expected 44 to match at least one of:
-  to equal 42
-  to equal 43
-```
-
-Improved:
-```
-expected 44 to match at least one of:
-      to equal 42
-      to equal 43
-```
-
-TDD cycles:
-- [ ] Update test to expect aligned output
-- [ ] Modify combinator failure message formatting
-- [ ] Apply consistent alignment across all combinators
-
----
-
 ## Implementation Order Rationale
 
 0. **Custom Matcher API first**: Enables extensibility, may require architectural changes that affect all other matchers. Users can then implement their own matchers while we build out the standard library.

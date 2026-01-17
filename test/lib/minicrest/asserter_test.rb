@@ -98,7 +98,6 @@ describe Minicrest::Asserter do
         assert_that(44).matches(equals(42) | equals(43))
       end
 
-      # TODO: Align nested `to equal ...` with the end of `expected 44`
       assert_equal error.message, <<~MSG.chomp
         expected 44 to match at least one of:
           equal to 42

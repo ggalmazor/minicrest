@@ -15,13 +15,14 @@ module Minicrest
   #     end
   #   end
   module Assertions
-    # Creates a fluent asserter for the given value.
+    # Creates a fluent asserter for the given value or block.
     #
     # This is the main entry point for Hamcrest-style assertions.
     # Returns an Asserter that provides chainable matcher methods.
     #
-    # @param actual [Object] the value to check
+    # @param actual [Object, nil] the value to check (nil if using block)
     # @param message [String, nil] optional custom message prefix
+    # @yield block to execute for error assertions
     # @return [Asserter] fluent asserter for chaining
     #
     # @example Basic assertions
@@ -35,8 +36,12 @@ module Minicrest
     #
     # @example With custom message
     #   assert_that(result, "computation result").equals(expected)
-    def assert_that(actual, message = nil)
-      Asserter.new(actual, message)
+    #
+    # @example With block for error assertions
+    #   assert_that { raise "boom" }.raises_error
+    #   assert_that { safe_operation }.raises_nothing
+    def assert_that(actual = nil, message = nil, &block)
+      Asserter.new(actual, message, &block)
     end
 
     # Factory method for equals() matcher.
