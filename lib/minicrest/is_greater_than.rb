@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative 'comparison_matcher'
+
 module Minicrest
   # Matcher that checks if a value is greater than an expected value.
   #
@@ -16,48 +18,13 @@ module Minicrest
   # @example Combined for range checking
   #   in_range = is_greater_than(0) & is_less_than(10)
   #   in_range.matches?(5)  # => true
-  class IsGreaterThan < Matcher
+  # @see ComparisonMatcher
+  class IsGreaterThan < ComparisonMatcher
     # Creates a new greater-than matcher.
     #
     # @param expected [Comparable] the value to compare against
     def initialize(expected)
-      super()
-      @expected = expected
-    end
-
-    # Checks if actual is greater than expected.
-    #
-    # @param actual [Object] the value to check
-    # @return [Boolean] true if actual > expected
-    def matches?(actual)
-      actual > @expected
-    end
-
-    # Returns a description of what this matcher expects.
-    #
-    # @return [String] description
-    def description
-      "greater than #{@expected.inspect}"
-    end
-
-    # Returns the failure message when the match fails.
-    #
-    # @param actual [Object] the value that was checked
-    # @return [String] failure message
-    def failure_message(actual)
-      <<~MSG.chomp
-        expected #{actual.inspect} to be greater than #{@expected.inspect}
-      MSG
-    end
-
-    # Returns the failure message when a negated match fails.
-    #
-    # @param actual [Object] the value that was checked
-    # @return [String] message indicating unexpected greater-than
-    def negated_failure_message(actual)
-      <<~MSG.chomp
-        expected #{actual.inspect} not to be greater than #{@expected.inspect}, but it was
-      MSG
+      super(expected, :>, 'greater than')
     end
   end
 end
