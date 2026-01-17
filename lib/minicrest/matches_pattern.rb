@@ -20,7 +20,11 @@ module Minicrest
     # @param actual [String] the string to check
     # @return [Boolean] true if actual matches pattern
     def matches?(actual)
+      return false unless actual.respond_to?(:to_str)
+
       @pattern.match?(actual)
+    rescue TypeError
+      false
     end
 
     # Returns a description of what this matcher expects.

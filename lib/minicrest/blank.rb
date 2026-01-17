@@ -13,7 +13,11 @@ module Minicrest
     # @param actual [String] the string to check
     # @return [Boolean] true if actual is empty or whitespace-only
     def matches?(actual)
+      return false unless actual.respond_to?(:strip)
+
       actual.strip.empty?
+    rescue NoMethodError
+      false
     end
 
     # Returns a description of what this matcher expects.

@@ -22,7 +22,11 @@ module Minicrest
     # @param actual [Hash] the hash to check
     # @return [Boolean] true if all keys are present
     def matches?(actual)
+      return false unless actual.respond_to?(:key?)
+
       @keys.all? { |key| actual.key?(key) }
+    rescue NoMethodError
+      false
     end
 
     # Returns a description of what this matcher expects.
@@ -41,6 +45,8 @@ module Minicrest
     # @param actual [Hash] the hash that was checked
     # @return [String] failure message listing missing keys
     def failure_message(actual)
+      return "expected a Hash, but got #{actual.inspect}" unless actual.respond_to?(:key?)
+
       missing = @keys.reject { |key| actual.key?(key) }
       <<~MSG.chomp
         expected #{format_hash(actual)} to have keys #{@keys.map(&:inspect).join(', ')}
