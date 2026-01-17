@@ -286,6 +286,18 @@ module Minicrest
       Minicrest::IsIn.new(collection)
     end
 
+    # Factory method for has_attribute() matcher.
+    #
+    # Checks if an object has a specific attribute.
+    # Works with OpenStruct, objects with attr_reader, and hashes.
+    #
+    # @param name [Symbol] the attribute name
+    # @param value_matcher [Matcher, nil] optional matcher for the value
+    # @return [HasAttribute] has_attribute matcher
+    def has_attribute(name, value_matcher = nil)
+      Minicrest::HasAttribute.new(name, value_matcher)
+    end
+
     # Factory method for never() combinator.
     #
     # Use this to negate any matcher.
