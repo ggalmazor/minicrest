@@ -530,6 +530,24 @@ Diff:
     actual:   4
 ```
 
+String diffs show the first difference:
+
+```ruby
+assert_that("hello").equals("hallo")
+```
+
+Output:
+
+```
+expected "hello"
+      to equal "hallo"
+
+Diff:
+  at index 1:
+    expected: "a"
+    actual:   "e"
+```
+
 ## API Reference
 
 ### Assertions Module - Core
