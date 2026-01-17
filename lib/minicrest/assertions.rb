@@ -119,6 +119,159 @@ module Minicrest
       Minicrest::Blank.new
     end
 
+    # Factory method for empty() matcher.
+    #
+    # Matches empty strings, arrays, hashes, or any object that responds
+    # to empty? and returns true.
+    #
+    # @return [Empty] empty matcher
+    def empty
+      Minicrest::Empty.new
+    end
+
+    # Factory method for has_size() matcher.
+    #
+    # Matches values with a specific size. Works with strings, arrays,
+    # hashes, and any object that responds to size.
+    #
+    # @param expected [Integer, Matcher] the expected size or a matcher for the size
+    # @return [HasSize] size matcher
+    #
+    # @example With integer
+    #   has_size(5).matches?('hello')  # => true
+    #
+    # @example With matcher
+    #   has_size(equals(5)).matches?('hello')  # => true
+    def has_size(expected)
+      Minicrest::HasSize.new(expected)
+    end
+
+    # Factory method for is_greater_than() matcher.
+    #
+    # @param expected [Comparable] the value to compare against
+    # @return [IsGreaterThan] greater-than matcher
+    def is_greater_than(expected)
+      Minicrest::IsGreaterThan.new(expected)
+    end
+
+    # Factory method for is_less_than() matcher.
+    #
+    # @param expected [Comparable] the value to compare against
+    # @return [IsLessThan] less-than matcher
+    def is_less_than(expected)
+      Minicrest::IsLessThan.new(expected)
+    end
+
+    # Factory method for is_greater_than_or_equal_to() matcher.
+    #
+    # @param expected [Comparable] the value to compare against
+    # @return [IsGreaterThanOrEqualTo] greater-than-or-equal-to matcher
+    def is_greater_than_or_equal_to(expected)
+      Minicrest::IsGreaterThanOrEqualTo.new(expected)
+    end
+
+    # Factory method for is_less_than_or_equal_to() matcher.
+    #
+    # @param expected [Comparable] the value to compare against
+    # @return [IsLessThanOrEqualTo] less-than-or-equal-to matcher
+    def is_less_than_or_equal_to(expected)
+      Minicrest::IsLessThanOrEqualTo.new(expected)
+    end
+
+    # Factory method for is_close_to() matcher.
+    #
+    # Matches if the actual value is within delta of the expected value.
+    # Useful for floating-point comparisons.
+    #
+    # @param expected [Numeric] the expected value
+    # @param delta [Numeric] the acceptable difference
+    # @return [IsCloseTo] close-to matcher
+    def is_close_to(expected, delta)
+      Minicrest::IsCloseTo.new(expected, delta)
+    end
+
+    # Factory method for includes() matcher.
+    #
+    # For strings: checks for substrings
+    # For arrays: checks for elements
+    # For hashes: checks for key-value pairs
+    #
+    # @param items [Array] items that must be included
+    # @return [Includes] includes matcher
+    def includes(*items)
+      Minicrest::Includes.new(*items)
+    end
+
+    # Factory method for has_key() matcher.
+    #
+    # Checks if a hash contains all specified keys.
+    #
+    # @param keys [Array<Symbol, String>] keys that must be present
+    # @return [HasKey] has_key matcher
+    def has_key(*keys)
+      Minicrest::HasKey.new(*keys)
+    end
+
+    # Factory method for has_value() matcher.
+    #
+    # Checks if a hash contains all specified values.
+    #
+    # @param values [Array] values that must be present
+    # @return [HasValue] has_value matcher
+    def has_value(*values)
+      Minicrest::HasValue.new(*values)
+    end
+
+    # Factory method for contains() matcher.
+    #
+    # Checks if a collection contains exactly the specified items (in any order).
+    #
+    # @param items [Array] items that must be contained
+    # @return [Contains] contains matcher
+    def contains(*items)
+      Minicrest::Contains.new(*items)
+    end
+
+    # Factory method for contains_exactly() matcher.
+    #
+    # Checks if an array contains exactly the specified items in the specified order.
+    #
+    # @param items [Array] items that must be contained in order
+    # @return [ContainsExactly] contains_exactly matcher
+    def contains_exactly(*items)
+      Minicrest::ContainsExactly.new(*items)
+    end
+
+    # Factory method for all_items() matcher.
+    #
+    # Checks if all items in a collection match the given matcher.
+    #
+    # @param item_matcher [Matcher] the matcher to apply to each item
+    # @return [AllItems] all_items matcher
+    def all_items(item_matcher)
+      Minicrest::AllItems.new(item_matcher)
+    end
+
+    # Factory method for some_items() matcher.
+    #
+    # Checks if at least one item in a collection matches the given matcher.
+    #
+    # @param item_matcher [Matcher] the matcher to apply to each item
+    # @return [SomeItems] some_items matcher
+    def some_items(item_matcher)
+      Minicrest::SomeItems.new(item_matcher)
+    end
+
+    # Factory method for no_items() matcher.
+    #
+    # Checks if no items in a collection match the given matcher.
+    #
+    # @param item_matcher [Matcher] the matcher to apply to each item
+    # @return [NoItems] no_items matcher
+    def no_items(item_matcher)
+      Minicrest::NoItems.new(item_matcher)
+    end
+
     # Factory method for never() combinator.
     #
     # Use this to negate any matcher.
