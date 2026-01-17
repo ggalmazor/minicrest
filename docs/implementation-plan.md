@@ -164,11 +164,11 @@ assert_that({}).matches(empty)
 ```
 
 TDD cycles:
-- [ ] Test empty string
-- [ ] Test empty array
-- [ ] Test empty hash
-- [ ] Test non-empty values fail
-- [ ] Test failure message
+- [x] Test empty string
+- [x] Test empty array
+- [x] Test empty hash
+- [x] Test non-empty values fail
+- [x] Test failure message
 
 ### 3.2 `has_size(expected)`
 
@@ -181,11 +181,11 @@ assert_that({a: 1, b: 2}).matches(has_size(2))
 ```
 
 TDD cycles:
-- [ ] Test string length
-- [ ] Test array size
-- [ ] Test hash size
-- [ ] Test size mismatch fails
-- [ ] Test with matcher argument: `has_size(is_greater_than(2))`
+- [x] Test string length
+- [x] Test array size
+- [x] Test hash size
+- [x] Test size mismatch fails
+- [x] Test with matcher argument: `has_size(equals(5))`
 
 ## Phase 4: Numeric Comparison Matchers
 
@@ -196,10 +196,10 @@ assert_that(5).matches(is_greater_than(3))
 ```
 
 TDD cycles:
-- [ ] Test greater value passes
-- [ ] Test equal value fails
-- [ ] Test lesser value fails
-- [ ] Test failure message
+- [x] Test greater value passes
+- [x] Test equal value fails
+- [x] Test lesser value fails
+- [x] Test failure message
 
 ### 4.2 `is_greater_than_or_equal_to(expected)`
 
@@ -208,9 +208,9 @@ assert_that(5).matches(is_greater_than_or_equal_to(5))
 ```
 
 TDD cycles:
-- [ ] Test greater value passes
-- [ ] Test equal value passes
-- [ ] Test lesser value fails
+- [x] Test greater value passes
+- [x] Test equal value passes
+- [x] Test lesser value fails
 
 ### 4.3 `is_less_than(expected)`
 
@@ -219,9 +219,9 @@ assert_that(3).matches(is_less_than(5))
 ```
 
 TDD cycles:
-- [ ] Test lesser value passes
-- [ ] Test equal value fails
-- [ ] Test greater value fails
+- [x] Test lesser value passes
+- [x] Test equal value fails
+- [x] Test greater value fails
 
 ### 4.4 `is_less_than_or_equal_to(expected)`
 
@@ -230,9 +230,9 @@ assert_that(5).matches(is_less_than_or_equal_to(5))
 ```
 
 TDD cycles:
-- [ ] Test lesser value passes
-- [ ] Test equal value passes
-- [ ] Test greater value fails
+- [x] Test lesser value passes
+- [x] Test equal value passes
+- [x] Test greater value fails
 
 ### 4.5 `is_close_to(expected, delta)`
 
@@ -243,10 +243,10 @@ assert_that(3.14159).matches(is_close_to(3.14, 0.01))
 ```
 
 TDD cycles:
-- [ ] Test value within delta passes
-- [ ] Test value outside delta fails
-- [ ] Test exact match passes
-- [ ] Test failure message shows delta
+- [x] Test value within delta passes
+- [x] Test value outside delta fails
+- [x] Test exact match passes
+- [x] Test failure message shows delta
 
 ## Phase 5: Collection Content Matchers
 
@@ -265,16 +265,16 @@ assert_that({a: 1, b: 2, c: 3}).matches(includes(a: 1, c: 3))
 ```
 
 TDD cycles:
-- [ ] Test string with single substring
-- [ ] Test string with multiple substrings
-- [ ] Test string missing substring fails
-- [ ] Test array with single element
-- [ ] Test array with multiple elements
-- [ ] Test array missing element fails
-- [ ] Test hash with single pair
-- [ ] Test hash with multiple pairs
-- [ ] Test hash missing pair fails
-- [ ] Test failure message lists missing items
+- [x] Test string with single substring
+- [x] Test string with multiple substrings
+- [x] Test string missing substring fails
+- [x] Test array with single element
+- [x] Test array with multiple elements
+- [x] Test array missing element fails
+- [x] Test hash with single pair
+- [x] Test hash with multiple pairs
+- [x] Test hash missing pair fails
+- [x] Test failure message lists missing items
 
 ### 5.2 `has_key(*keys)`
 
@@ -286,10 +286,10 @@ assert_that({a: 1, b: 2}).matches(has_key(:a, :b))
 ```
 
 TDD cycles:
-- [ ] Test single key present
-- [ ] Test multiple keys present
-- [ ] Test key missing fails
-- [ ] Test failure message lists missing keys
+- [x] Test single key present
+- [x] Test multiple keys present
+- [x] Test key missing fails
+- [x] Test failure message lists missing keys
 
 ### 5.3 `has_value(*values)`
 
@@ -301,10 +301,10 @@ assert_that({a: 1, b: 2}).matches(has_value(1, 2))
 ```
 
 TDD cycles:
-- [ ] Test single value present
-- [ ] Test multiple values present
-- [ ] Test value missing fails
-- [ ] Test failure message lists missing values
+- [x] Test single value present
+- [x] Test multiple values present
+- [x] Test value missing fails
+- [x] Test failure message lists missing values
 
 ### 5.4 `contains(*items)`
 
@@ -316,11 +316,11 @@ assert_that({b: 2, a: 1}).matches(contains(a: 1, b: 2))
 ```
 
 TDD cycles:
-- [ ] Test array with same elements different order
-- [ ] Test array with extra elements fails
-- [ ] Test array with missing elements fails
-- [ ] Test hash with same pairs different order
-- [ ] Test failure message shows difference
+- [x] Test array with same elements different order
+- [x] Test array with extra elements fails
+- [x] Test array with missing elements fails
+- [x] Test hash with same pairs different order
+- [x] Test failure message shows difference
 
 ### 5.5 `contains_exactly(*items)`
 
@@ -331,10 +331,10 @@ assert_that([1, 2, 3]).matches(contains_exactly(1, 2, 3))
 ```
 
 TDD cycles:
-- [ ] Test exact match passes
-- [ ] Test different order fails
-- [ ] Test extra elements fails
-- [ ] Test missing elements fails
+- [x] Test exact match passes
+- [x] Test different order fails
+- [x] Test extra elements fails
+- [x] Test missing elements fails
 
 ## Phase 6: Collection Item Matchers
 
@@ -495,8 +495,8 @@ expected 44 to match at least one of:
 Improved:
 ```
 expected 44 to match at least one of:
-           to equal 42
-           to equal 43
+      to equal 42
+      to equal 43
 ```
 
 TDD cycles:
