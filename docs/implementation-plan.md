@@ -350,10 +350,10 @@ assert_that([2, 4, 6]).matches(all_items(is_greater_than(0)))
 ```
 
 TDD cycles:
-- [ ] Test all items match
-- [ ] Test one item fails
-- [ ] Test empty array passes
-- [ ] Test failure message shows failing item and index
+- [x] Test all items match
+- [x] Test one item fails
+- [x] Test empty array passes
+- [x] Test failure message shows failing item and index
 
 ### 6.2 `some_items(matcher)`
 
@@ -364,10 +364,10 @@ assert_that([1, "two", 3]).matches(some_items(is_a(String)))
 ```
 
 TDD cycles:
-- [ ] Test one item matches
-- [ ] Test multiple items match
-- [ ] Test no items match fails
-- [ ] Test empty array fails
+- [x] Test one item matches
+- [x] Test multiple items match
+- [x] Test no items match fails
+- [x] Test empty array fails
 
 ### 6.3 `no_items(matcher)`
 
@@ -378,9 +378,9 @@ assert_that([1, 2, 3]).matches(no_items(is_a(String)))
 ```
 
 TDD cycles:
-- [ ] Test no items match
-- [ ] Test one item matches fails
-- [ ] Test empty array passes
+- [x] Test no items match
+- [x] Test one item matches fails
+- [x] Test empty array passes
 
 ### 6.4 `all_entries(matcher)`, `some_entry(matcher)`, `no_entry(matcher)`
 
