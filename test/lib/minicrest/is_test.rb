@@ -6,21 +6,24 @@ require_relative '../../../lib/minicrest'
 describe Minicrest::Is do
   include Minicrest::Assertions
 
-  describe 'initialization' do
-    it 'raises ArgumentError when passed a matcher' do
-      error = assert_raises(ArgumentError) do
-        is(equals(42))
-      end
-
-      assert_equal error.message, <<~MSG.chomp
-        is() expects a value, not a matcher. Use is() for reference equality checks, or use matches() with the matcher directly.
-      MSG
+  describe 'delegation to matchers' do
+    it 'delegates matches? to the provided matcher' do
+      assert is(anything).matches?(42)
+      assert is(equals(42)).matches?(42)
+      refute is(equals(42)).matches?(43)
     end
 
-    it 'raises ArgumentError when passed any matcher type' do
-      assert_raises(ArgumentError) { is(never(equals(42))) }
-      assert_raises(ArgumentError) { is(anything) }
-      assert_raises(ArgumentError) { is(equals(1) | equals(2)) }
+    it 'delegates description to the provided matcher' do
+      assert_equal 'anything', is(anything).description
+      assert_equal 'equal to 42', is(equals(42)).description
+    end
+
+    it 'delegates failure_message to the provided matcher' do
+      assert_equal equals(42).failure_message(43), is(equals(42)).failure_message(43)
+    end
+
+    it 'delegates negated_failure_message to the provided matcher' do
+      assert_equal equals(42).negated_failure_message(42), is(equals(42)).negated_failure_message(42)
     end
   end
 

@@ -30,7 +30,7 @@ describe Minicrest::EndsWith do
 
   describe '#description' do
     it 'describes the expected suffix' do
-      assert_equal 'a string ending with "world"', ends_with('world').description
+      assert_equal 'a string end with "world"', ends_with('world').description
     end
   end
 

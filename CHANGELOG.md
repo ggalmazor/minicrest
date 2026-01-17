@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Core matchers**
   - `equals(expected)` - value equality with deep comparison
-  - `is(expected)` - reference equality
+  - `is(expected)` - reference equality (now supports matchers as well, e.g., `is(anything)`)
   - `anything` - placeholder matcher that accepts any value
   - `never(matcher)` - negation
 

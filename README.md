@@ -82,7 +82,14 @@ assert_that("hello").does_not(start_with("bye"))
 Use `anything` when you don't care about a particular value:
 
 ```ruby
-assert_that(some_value).matches(anything)
+assert_that(some_value).is(anything)
+```
+
+Use `truthy` or `falsy` to match any truthy or falsy value in Ruby:
+
+```ruby
+assert_that(some_value).is(truthy)
+assert_that(some_value).is(anything)
 ```
 
 ## Type and Method Matchers
@@ -557,7 +564,7 @@ Diff:
 | `assert_that(actual, message = nil)` | Entry point for value assertions |
 | `assert_that { block }` | Entry point for block assertions |
 | `equals(expected)` | Value equality matcher |
-| `is(expected)` | Reference equality matcher |
+| `is(expected)` | Reference equality matcher (supports matchers) |
 | `anything` | Matches any value |
 | `never(matcher)` | Negates a matcher (aliases: `is_not`, `does_not`) |
 
@@ -641,7 +648,7 @@ Diff:
 | Method | Description |
 |--------|-------------|
 | `.equals(expected)` | Assert value equality |
-| `.is(expected)` | Assert reference equality |
+| `.is(expected)` | Assert reference equality (supports matchers) |
 | `.never(matcher)` | Assert negation (aliases: `is_not`, `does_not`) |
 | `.matches(matcher)` | Use any matcher |
 | `.raises_error(class = nil, message_matcher = nil)` | Assert block raises |

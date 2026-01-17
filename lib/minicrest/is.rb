@@ -21,52 +21,61 @@ module Minicrest
   class Is < Matcher
     # Creates a new reference equality matcher.
     #
-    # @param expected [Object] the expected object reference (must not be a Matcher)
-    # @raise [ArgumentError] if expected is a Matcher
+    # @param expected [Object, Matcher] the expected object reference or a matcher
     def initialize(expected)
       super()
-      if expected.is_a?(Matcher)
-        raise ArgumentError,
-              'is() expects a value, not a matcher. ' \
-              'Use is() for reference equality checks, ' \
-              'or use matches() with the matcher directly.'
-      end
       @expected = expected
     end
 
-    # Checks if actual is the same object as expected.
+    # Checks if actual is the same object as expected, or matches if expected is a matcher.
     #
     # @param actual [Object] the value to check
-    # @return [Boolean] true if actual.equal?(expected)
+    # @return [Boolean] true if actual matches
     def matches?(actual)
-      actual.equal?(@expected)
+      if @expected.is_a?(Matcher)
+        @expected.matches?(actual)
+      else
+        actual.equal?(@expected)
+      end
     end
 
     # Returns a description of what this matcher expects.
     #
-    # @return [String] description including object id
+    # @return [String] description
     def description
-      "the same object as #{@expected.inspect} (object_id: #{@expected.object_id})"
+      if @expected.is_a?(Matcher)
+        @expected.description
+      else
+        "the same object as #{@expected.inspect} (object_id: #{@expected.object_id})"
+      end
     end
 
     # Returns the failure message when the match fails.
     #
     # @param actual [Object] the value that was checked
-    # @return [String] detailed message showing both object ids
+    # @return [String] failure message
     def failure_message(actual)
-      <<~MSG.chomp
-        expected #{actual.inspect} (object_id: #{actual.object_id}) to be the same object as #{@expected.inspect} (object_id: #{@expected.object_id})
-      MSG
+      if @expected.is_a?(Matcher)
+        @expected.failure_message(actual)
+      else
+        <<~MSG.chomp
+          expected #{actual.inspect} (object_id: #{actual.object_id}) to be the same object as #{@expected.inspect} (object_id: #{@expected.object_id})
+        MSG
+      end
     end
 
     # Returns the failure message when a negated match fails.
     #
     # @param actual [Object] the value that was checked
-    # @return [String] message indicating unexpected reference equality
+    # @return [String] failure message
     def negated_failure_message(actual)
-      <<~MSG.chomp
-        expected #{actual.inspect} (object_id: #{actual.object_id}) not to be the same object as #{@expected.inspect}, but they are the same object
-      MSG
+      if @expected.is_a?(Matcher)
+        @expected.negated_failure_message(actual)
+      else
+        <<~MSG.chomp
+          expected #{actual.inspect} (object_id: #{actual.object_id}) not to be the same object as #{@expected.inspect}, but they are the same object
+        MSG
+      end
     end
   end
 
