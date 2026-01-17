@@ -27,5 +27,10 @@ jobs:
           ruby-version: '3.4'
           bundler-cache: true
 
+      - name: Build Gem
+        run: gem build minicrest.gemspec
+
       - name: Publish to RubyGems
         uses: rubygems/release-gem@v1
+        with:
+          release-command: gem push *.gem

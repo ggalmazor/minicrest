@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.5] - 2026-01-17
+
+- Housekeeping: switch to Trusted Publishing (OIDC) for RubyGems
+- Housekeeping: fix documentation link duplication when hosted at a subpath
+- Housekeeping: migrate documentation post-processing to a Rake task
+- Housekeeping: configure publish workflow to allow manual tagging
+
 ## [1.0.4] - 2026-01-17
 
 - Housekeeping: tuning the publish GH workflow for automated releases to Rubygems
