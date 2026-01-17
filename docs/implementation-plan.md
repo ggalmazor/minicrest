@@ -398,22 +398,24 @@ TDD cycles:
 
 ## Phase 7: Membership Matcher
 
-### 7.1 `in(collection)`
+### 7.1 `is_in(collection)`
 
 Matches if the actual value is present in the collection.
+Note: Uses `is_in` instead of `in` since `in` is a reserved keyword in Ruby.
 
 ```ruby
-assert_that(2).matches(in([1, 2, 3]))
-assert_that(:a).matches(in({a: 1, b: 2}))  # checks keys
-assert_that("el").matches(in("hello"))
+assert_that(2).matches(is_in([1, 2, 3]))
+assert_that(:a).matches(is_in({a: 1, b: 2}))  # checks keys
+assert_that("el").matches(is_in("hello"))
+assert_that(5).matches(is_in(1..10))  # ranges
 ```
 
 TDD cycles:
-- [ ] Test element in array
-- [ ] Test element not in array fails
-- [ ] Test key in hash
-- [ ] Test substring in string
-- [ ] Test with multiple collections: `in([1, 2], [3, 4])` matches if in any
+- [x] Test element in array
+- [x] Test element not in array fails
+- [x] Test key in hash
+- [x] Test substring in string
+- [x] Test value in range
 
 ## Phase 8: Object Attribute Matcher
 
