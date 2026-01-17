@@ -13,6 +13,8 @@ end
 namespace :docs do
   desc 'Fix YARD documentation for subpath hosting'
   task :fix do
+    require_relative 'lib/minicrest/version'
+    version = Minicrest::VERSION
     base_url = 'https://ggalmazor.com/minicrest/'
     doc_dir = File.join(__dir__, 'doc')
 
@@ -57,13 +59,16 @@ namespace :docs do
       end
     end
 
-    # 2. Convert all relative links to absolute links in HTML files
-    puts "Converting relative links to absolute in #{doc_dir}..."
+    # 2. Convert all relative links to absolute links in HTML files and inject version
+    puts "Converting relative links to absolute and injecting version #{version} in #{doc_dir}..."
 
     Find.find(doc_dir) do |path|
       next unless path.end_with?('.html')
 
       content = File.read(path)
+
+      # Inject version into title if it's the standard "Minicrest Documentation"
+      content.gsub!('Minicrest Documentation', "Minicrest v#{version} Documentation")
 
       # YARD uses relative paths like "", "Minicrest", "Minicrest/SomeSubClass"
       # We want to find href="../something.html" and replace it with base_url + something.html
