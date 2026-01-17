@@ -77,12 +77,41 @@ module Minicrest
       Minicrest::Is.new(expected)
     end
 
-    # Factory method for is_a() matcher.
+    # Factory method for descends_from() matcher.
     #
     # @param expected_type [Class, Module] the expected type
-    # @return [IsA] type matcher
-    def is_a(expected_type)
-      Minicrest::IsA.new(expected_type)
+    # @return [DescendsFrom] type matcher
+    def descends_from(expected_type)
+      Minicrest::DescendsFrom.new(expected_type)
+    end
+
+    # Factory method for instance_of() matcher.
+    #
+    # @param expected_type [Class] the expected type
+    # @return [InstanceOf] instance_of matcher
+    def instance_of(expected_type)
+      Minicrest::InstanceOf.new(expected_type)
+    end
+
+    # Factory method for nil_value() matcher.
+    #
+    # @return [NilValue] nil matcher
+    def nil_value
+      Minicrest::NilValue.new
+    end
+
+    # Factory method for truthy() matcher.
+    #
+    # @return [Truthy] truthy matcher
+    def truthy
+      Minicrest::Truthy.new
+    end
+
+    # Factory method for falsy() matcher.
+    #
+    # @return [Falsy] falsy matcher
+    def falsy
+      Minicrest::Falsy.new
     end
 
     # Factory method for responds_to() matcher.
@@ -183,6 +212,16 @@ module Minicrest
       Minicrest::IsLessThanOrEqualTo.new(expected)
     end
 
+    # Factory method for between() matcher.
+    #
+    # @param min [Comparable] the minimum value
+    # @param max [Comparable] the maximum value
+    # @param exclusive [Boolean] whether the range is exclusive
+    # @return [Between] between matcher
+    def between(min, max, exclusive: false)
+      Minicrest::Between.new(min, max, exclusive:)
+    end
+
     # Factory method for is_close_to() matcher.
     #
     # Matches if the actual value is within delta of the expected value.
@@ -277,6 +316,30 @@ module Minicrest
       Minicrest::NoItems.new(item_matcher)
     end
 
+    # Factory method for all_entries() matcher.
+    #
+    # @param entry_matcher [Proc, Matcher] matcher for entries
+    # @return [AllEntries] all_entries matcher
+    def all_entries(entry_matcher)
+      Minicrest::AllEntries.new(entry_matcher)
+    end
+
+    # Factory method for some_entry() matcher.
+    #
+    # @param entry_matcher [Proc, Matcher] matcher for entries
+    # @return [SomeEntry] some_entry matcher
+    def some_entry(entry_matcher)
+      Minicrest::SomeEntry.new(entry_matcher)
+    end
+
+    # Factory method for no_entry() matcher.
+    #
+    # @param entry_matcher [Proc, Matcher] matcher for entries
+    # @return [NoEntry] no_entry matcher
+    def no_entry(entry_matcher)
+      Minicrest::NoEntry.new(entry_matcher)
+    end
+
     # Factory method for is_in() matcher.
     #
     # Checks if a value is present in a collection.
@@ -312,6 +375,8 @@ module Minicrest
     def never(matcher)
       Minicrest::Not.new(matcher)
     end
+    alias is_not never
+    alias does_not never
 
     # Factory method for all_of() combinator.
     #
