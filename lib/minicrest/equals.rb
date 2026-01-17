@@ -92,7 +92,6 @@ module Minicrest
       value.is_a?(Hash) || value.is_a?(Array) || value.is_a?(String)
     end
 
-    # TODO: Replace with off-the-shelve gem
     # Computes diff for hashes.
     #
     # @param actual [Hash] actual hash
@@ -124,7 +123,6 @@ module Minicrest
       "Diff:\n#{lines.join("\n")}"
     end
 
-    # TODO: Replace with off-the-shelve gem
     # Computes diff for arrays.
     #
     # @param actual [Array] actual array

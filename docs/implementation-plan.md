@@ -467,19 +467,20 @@ TDD cycles:
 
 Existing TODOs and technical debt to address.
 
-### 10.1 Replace custom diff logic with a gem
+### 10.1 ~~Replace custom diff logic with a gem~~ (Decided: Keep custom)
 
-Location: `lib/minicrest/equals.rb:95` and `lib/minicrest/equals.rb:127`
+Location: `lib/minicrest/equals.rb`
 
-The `Equals` matcher has custom implementations for `hash_diff` and `array_diff`. Consider replacing with an established diff gem for better maintenance and edge case handling.
+The `Equals` matcher has custom implementations for `hash_diff`, `array_diff`, and `string_diff`.
 
-TDD cycles:
-- [ ] Research diff gems (e.g., `hashdiff`, `diffy`)
-- [ ] Add gem dependency
-- [ ] Replace `hash_diff` implementation
-- [ ] Replace `array_diff` implementation
-- [ ] Ensure all existing tests pass
-- [ ] Verify failure message format is preserved
+**Decision**: After researching diff gems (`hashdiff`, `hash_diff`, `diffy`), decided to keep the custom implementation because:
+- Simple, readable code with no external dependencies
+- Produces human-readable assertion failure messages
+- Adequate for the use case (assertion diffs, not general-purpose diffing)
+- `hashdiff` would require output transformation; `diffy` requires shell access
+
+- [x] Research diff gems (e.g., `hashdiff`, `diffy`)
+- [x] Decision: Keep custom implementation
 
 ## Implementation Order Rationale
 
