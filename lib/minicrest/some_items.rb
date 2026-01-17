@@ -1,25 +1,22 @@
 # frozen_string_literal: true
 
+require_relative 'collection_item_matcher'
+
 module Minicrest
   # Matcher that checks if at least one item in a collection matches a given matcher.
   #
   # @example Basic usage
-  #   some_items(is_a(String)).matches?([1, 'two', 3])  # => true
-  #   some_items(is_a(String)).matches?([1, 2, 3])  # => false
-  class SomeItems < Matcher
-    # Creates a new some_items matcher.
-    #
-    # @param item_matcher [Matcher] the matcher to apply to each item
-    def initialize(item_matcher)
-      super()
-      @item_matcher = item_matcher
-    end
-
+  #   some_items(descends_from(String)).matches?([1, 'two', 3])  # => true
+  #   some_items(descends_from(String)).matches?([1, 2, 3])  # => false
+  # @see CollectionItemMatcher
+  class SomeItems < CollectionItemMatcher
     # Checks if at least one item matches the item matcher.
     #
-    # @param actual [Array] the collection to check
+    # @param actual [Enumerable] the collection to check
     # @return [Boolean] true if any item matches
     def matches?(actual)
+      return false unless collection?(actual)
+
       actual.any? { |item| @item_matcher.matches?(item) }
     end
 
@@ -32,9 +29,11 @@ module Minicrest
 
     # Returns the failure message when the match fails.
     #
-    # @param actual [Array] the collection that was checked
+    # @param actual [Enumerable] the collection that was checked
     # @return [String] failure message
-    def failure_message(_actual)
+    def failure_message(actual)
+      return "expected a collection, but got #{actual.inspect}" unless collection?(actual)
+
       <<~MSG.chomp
         expected some items to be #{@item_matcher.description}
         but no items matched
@@ -43,11 +42,13 @@ module Minicrest
 
     # Returns the failure message when a negated match fails.
     #
-    # @param actual [Array] the collection that was checked
+    # @param actual [Enumerable] the collection that was checked
     # @return [String] message showing which item matched
     def negated_failure_message(actual)
+      return "expected a collection, but got #{actual.inspect}" unless collection?(actual)
+
       matching_index = actual.find_index { |item| @item_matcher.matches?(item) }
-      matching_item = actual[matching_index]
+      matching_item = actual.to_a[matching_index]
 
       <<~MSG.chomp
         expected no items to be #{@item_matcher.description}

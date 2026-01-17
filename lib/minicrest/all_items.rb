@@ -1,28 +1,25 @@
 # frozen_string_literal: true
 
+require_relative 'collection_item_matcher'
+
 module Minicrest
   # Matcher that checks if all items in a collection match a given matcher.
   #
   # @example Basic usage
-  #   all_items(is_a(Integer)).matches?([1, 2, 3])  # => true
-  #   all_items(is_a(Integer)).matches?([1, 'two', 3])  # => false
+  #   all_items(descends_from(Integer)).matches?([1, 2, 3])  # => true
+  #   all_items(descends_from(Integer)).matches?([1, 'two', 3])  # => false
   #
   # @example With comparison matchers
   #   all_items(is_greater_than(0)).matches?([1, 2, 3])  # => true
-  class AllItems < Matcher
-    # Creates a new all_items matcher.
-    #
-    # @param item_matcher [Matcher] the matcher to apply to each item
-    def initialize(item_matcher)
-      super()
-      @item_matcher = item_matcher
-    end
-
+  # @see CollectionItemMatcher
+  class AllItems < CollectionItemMatcher
     # Checks if all items match the item matcher.
     #
-    # @param actual [Array] the collection to check
+    # @param actual [Enumerable] the collection to check
     # @return [Boolean] true if all items match
     def matches?(actual)
+      return false unless collection?(actual)
+
       actual.all? { |item| @item_matcher.matches?(item) }
     end
 
@@ -35,12 +32,14 @@ module Minicrest
 
     # Returns the failure message when the match fails.
     #
-    # @param actual [Array] the collection that was checked
+    # @param actual [Enumerable] the collection that was checked
     # @return [String] failure message showing failing item
     def failure_message(actual)
+      return "expected a collection, but got #{actual.inspect}" unless collection?(actual)
+
       failing_index = actual.find_index { |item| !@item_matcher.matches?(item) }
-      failing_item = actual[failing_index]
-      item_failure = @item_matcher.failure_message(failing_item).gsub(/^/, '  ')
+      failing_item = actual.to_a[failing_index]
+      item_failure = item_failure_message(failing_item)
 
       <<~MSG.chomp
         expected all items to be #{@item_matcher.description}
@@ -51,7 +50,7 @@ module Minicrest
 
     # Returns the failure message when a negated match fails.
     #
-    # @param actual [Array] the collection that was checked
+    # @param _actual [Enumerable] the collection that was checked
     # @return [String] message indicating unexpected match
     def negated_failure_message(_actual)
       <<~MSG.chomp
