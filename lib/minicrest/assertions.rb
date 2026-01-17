@@ -272,6 +272,20 @@ module Minicrest
       Minicrest::NoItems.new(item_matcher)
     end
 
+    # Factory method for is_in() matcher.
+    #
+    # Checks if a value is present in a collection.
+    # For arrays: checks element membership
+    # For hashes: checks key membership
+    # For strings: checks substring membership
+    # For ranges: checks value inclusion
+    #
+    # @param collection [Array, Hash, String, Range] the collection to check
+    # @return [IsIn] is_in matcher
+    def is_in(collection)
+      Minicrest::IsIn.new(collection)
+    end
+
     # Factory method for never() combinator.
     #
     # Use this to negate any matcher.
