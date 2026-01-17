@@ -42,6 +42,14 @@ class MyTest < Minitest::Test
 end
 ```
 
+## Running Tests
+
+To run the library's own tests:
+
+```bash
+rake test
+```
+
 ## Core Matchers
 
 ### Value Equality
