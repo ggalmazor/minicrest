@@ -43,7 +43,10 @@ module Minicrest
     # @param actual [Object] the value that was checked
     # @return [String] failure message
     def failure_message(actual)
-      "expected #{actual.inspect} to #{@label} #{@substring.inspect}"
+      <<~MSG.chomp
+        expected #{actual.inspect}
+              to #{@label} #{@substring.inspect}
+      MSG
     end
 
     # Returns the failure message when a negated match fails.
@@ -51,7 +54,11 @@ module Minicrest
     # @param actual [Object] the value that was checked
     # @return [String] failure message
     def negated_failure_message(actual)
-      "expected #{actual.inspect} not to #{@label} #{@substring.inspect}, but it does"
+      <<~MSG.chomp
+        expected #{actual.inspect}
+              not to #{@label} #{@substring.inspect}
+        but it does
+      MSG
     end
   end
 end
