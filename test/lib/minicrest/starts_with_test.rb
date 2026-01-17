@@ -63,7 +63,7 @@ describe Minicrest::StartsWith do
     end
 
     it 'works with combinators' do
-      assert_that('hello world').matches(starts_with('hello') & is_a(String))
+      assert_that('hello world').matches(starts_with('hello') & descends_from(String))
     end
   end
 end

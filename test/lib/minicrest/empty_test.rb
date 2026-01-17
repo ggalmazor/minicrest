@@ -83,8 +83,8 @@ describe Minicrest::Empty do
     end
 
     it 'works with & operator' do
-      assert (empty & is_a(String)).matches?('')
-      refute (empty & is_a(String)).matches?([])
+      assert (empty & descends_from(String)).matches?('')
+      refute (empty & descends_from(String)).matches?([])
     end
 
     it 'works with | operator' do

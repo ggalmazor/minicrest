@@ -68,7 +68,7 @@ describe Minicrest::Blank do
     end
 
     it 'works with combinators' do
-      assert_that('').matches(blank & is_a(String))
+      assert_that('').matches(blank & descends_from(String))
     end
   end
 end

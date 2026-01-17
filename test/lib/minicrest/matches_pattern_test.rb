@@ -61,7 +61,7 @@ describe Minicrest::MatchesPattern do
     end
 
     it 'works with combinators' do
-      assert_that('hello123').matches(matches_pattern(/\d+/) & is_a(String))
+      assert_that('hello123').matches(matches_pattern(/\d+/) & descends_from(String))
     end
   end
 end

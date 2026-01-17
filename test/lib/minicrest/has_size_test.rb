@@ -121,8 +121,8 @@ describe Minicrest::HasSize do
     end
 
     it 'works with & operator' do
-      assert (has_size(5) & is_a(String)).matches?('hello')
-      refute (has_size(3) & is_a(String)).matches?('hello')
+      assert (has_size(5) & descends_from(String)).matches?('hello')
+      refute (has_size(3) & descends_from(String)).matches?('hello')
     end
 
     it 'works with | operator' do

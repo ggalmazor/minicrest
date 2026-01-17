@@ -70,7 +70,7 @@ describe Minicrest::RespondsTo do
     end
 
     it 'works with combinators' do
-      assert_that('hello').matches(responds_to(:upcase) & is_a(String))
+      assert_that('hello').matches(responds_to(:upcase) & descends_from(String))
     end
   end
 end

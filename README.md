@@ -88,9 +88,9 @@ assert_that(some_value).matches(anything)
 Matches if the value is an instance of the expected type:
 
 ```ruby
-assert_that("hello").matches(is_a(String))
-assert_that(42).matches(is_a(Integer))
-assert_that([]).matches(is_a(Enumerable))  # works with modules
+assert_that("hello").matches(descends_from(String))
+assert_that(42).matches(descends_from(Integer))
+assert_that([]).matches(descends_from(Enumerable)) # works with modules
 ```
 
 ### `responds_to(*methods)`
@@ -254,7 +254,7 @@ assert_that([1, 2, 3]).matches(contains_exactly(1, 2, 3))
 Matches if all items in the collection match:
 
 ```ruby
-assert_that([2, 4, 6]).matches(all_items(is_a(Integer)))
+assert_that([2, 4, 6]).matches(all_items(descends_from(Integer)))
 assert_that([2, 4, 6]).matches(all_items(is_greater_than(0)))
 ```
 
@@ -263,7 +263,7 @@ assert_that([2, 4, 6]).matches(all_items(is_greater_than(0)))
 Matches if at least one item matches:
 
 ```ruby
-assert_that([1, "two", 3]).matches(some_items(is_a(String)))
+assert_that([1, "two", 3]).matches(some_items(descends_from(String)))
 ```
 
 ### `no_items(matcher)`
@@ -271,7 +271,7 @@ assert_that([1, "two", 3]).matches(some_items(is_a(String)))
 Matches if no items match:
 
 ```ruby
-assert_that([1, 2, 3]).matches(no_items(is_a(String)))
+assert_that([1, 2, 3]).matches(no_items(descends_from(String)))
 ```
 
 ## Membership Matcher
