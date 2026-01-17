@@ -71,6 +71,10 @@ assert_that(obj).is(obj)
 ```ruby
 assert_that(42).never(equals(0))
 assert_that(nil).never(equals(false))
+
+# Aliases for more natural flow
+assert_that(42).is_not(0)
+assert_that("hello").does_not(start_with("bye"))
 ```
 
 ### Placeholder Matching
@@ -83,14 +87,23 @@ assert_that(some_value).matches(anything)
 
 ## Type and Method Matchers
 
-### `is_a(expected_type)`
+### `is_a(type)` / `descends_from(type)`
 
-Matches if the value is an instance of the expected type:
+Matches if the value is an instance of the expected type (including inheritance):
 
 ```ruby
-assert_that("hello").matches(descends_from(String))
+assert_that("hello").matches(is_a(String))
 assert_that(42).matches(descends_from(Integer))
-assert_that([]).matches(descends_from(Enumerable)) # works with modules
+assert_that([]).matches(is_a(Enumerable)) # works with modules
+```
+
+### `instance_of(type)`
+
+Matches if the value is an exact instance of the expected class (no inheritance):
+
+```ruby
+assert_that("hello").matches(instance_of(String))
+assert_that(42).never(instance_of(Numeric)) # Integer is a Numeric, but not exactly InstanceOf Numeric
 ```
 
 ### `responds_to(*methods)`
@@ -100,6 +113,36 @@ Matches if the value responds to all specified methods:
 ```ruby
 assert_that("hello").matches(responds_to(:upcase))
 assert_that([]).matches(responds_to(:push, :pop))
+```
+
+## Value Matchers
+
+### `nil_value`
+
+Matches if the value is `nil`:
+
+```ruby
+assert_that(nil).matches(nil_value)
+assert_that(42).never(nil_value)
+```
+
+### `truthy`
+
+Matches if the value is considered true (anything except `nil` or `false`):
+
+```ruby
+assert_that(true).matches(truthy)
+assert_that(42).matches(truthy)
+assert_that("hello").matches(truthy)
+```
+
+### `falsy`
+
+Matches if the value is considered false (`nil` or `false`):
+
+```ruby
+assert_that(false).matches(falsy)
+assert_that(nil).matches(falsy)
 ```
 
 ## String Matchers
@@ -184,6 +227,15 @@ assert_that(3).matches(is_less_than(5))
 ```ruby
 assert_that(5).matches(is_less_than_or_equal_to(5))
 assert_that(4).matches(is_less_than_or_equal_to(5))
+```
+
+### `between(min, max, exclusive: false)`
+
+Matches if the value is within the range:
+
+```ruby
+assert_that(5).matches(between(1, 10))
+assert_that(10).never(between(1, 10, exclusive: true))
 ```
 
 ### `is_close_to(expected, delta)`
@@ -272,6 +324,18 @@ Matches if no items match:
 
 ```ruby
 assert_that([1, 2, 3]).matches(no_items(descends_from(String)))
+```
+
+### `all_entries(matcher)` / `some_entry(matcher)` / `no_entry(matcher)`
+
+Similar to item matchers, but specifically for hash entries (key-value pairs):
+
+```ruby
+# all_entries expects a matcher that works with [key, value] arrays
+assert_that({ a: 1, b: 2 }).matches(all_entries(includes(:a, :b) | includes(1, 2)))
+
+# You can also use a Proc for more complex entry matching
+assert_that({ a: 1, b: 2 }).matches(some_entry(->(entry) { entry[1] > 1 }))
 ```
 
 ## Membership Matcher
@@ -477,14 +541,24 @@ Diff:
 | `equals(expected)` | Value equality matcher |
 | `is(expected)` | Reference equality matcher |
 | `anything` | Matches any value |
-| `never(matcher)` | Negates a matcher |
+| `never(matcher)` | Negates a matcher (aliases: `is_not`, `does_not`) |
 
 ### Assertions Module - Type & Method
 
 | Method | Description |
 |--------|-------------|
-| `is_a(type)` | Type/class matcher |
+| `is_a(type)` | Type/class matcher (alias of `descends_from`) |
+| `descends_from(type)` | Type/class matcher |
+| `instance_of(type)` | Exact class matcher |
 | `responds_to(*methods)` | Method presence matcher |
+
+### Assertions Module - Values
+
+| Method | Description |
+|--------|-------------|
+| `nil_value` | Matches `nil` |
+| `truthy` | Matches non-nil, non-false values |
+| `falsy` | Matches `nil` or `false` |
 
 ### Assertions Module - Strings
 
@@ -510,6 +584,7 @@ Diff:
 | `is_greater_than_or_equal_to(n)` | Greater than or equal comparison |
 | `is_less_than(n)` | Less than comparison |
 | `is_less_than_or_equal_to(n)` | Less than or equal comparison |
+| `between(min, max, exclusive: false)` | Range comparison |
 | `is_close_to(n, delta)` | Floating-point tolerance |
 
 ### Assertions Module - Collections
@@ -524,6 +599,9 @@ Diff:
 | `all_items(matcher)` | All items match |
 | `some_items(matcher)` | At least one matches |
 | `no_items(matcher)` | No items match |
+| `all_entries(matcher)` | All hash entries match |
+| `some_entry(matcher)` | At least one entry matches |
+| `no_entry(matcher)` | No entries match |
 | `is_in(collection)` | Membership check |
 
 ### Assertions Module - Objects
@@ -546,7 +624,7 @@ Diff:
 |--------|-------------|
 | `.equals(expected)` | Assert value equality |
 | `.is(expected)` | Assert reference equality |
-| `.never(matcher)` | Assert negation |
+| `.never(matcher)` | Assert negation (aliases: `is_not`, `does_not`) |
 | `.matches(matcher)` | Use any matcher |
 | `.raises_error(class = nil, message_matcher = nil)` | Assert block raises |
 | `.raises_nothing` | Assert block doesn't raise |

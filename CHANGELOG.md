@@ -16,8 +16,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `never(matcher)` - negation
 
 - **Type and method matchers**
-  - `is_a(type)` - type/class checking
+  - `is_a(type)` (alias of `descends_from`) - type/class checking (including hierarchy)
+  - `descends_from(type)` - type/class checking (including hierarchy)
+  - `instance_of(type)` - exact class checking
   - `responds_to(*methods)` - method presence checking
+
+- **Value matchers**
+  - `nil_value` - matches `nil`
+  - `truthy` - matches any value that is not `nil` or `false`
+  - `falsy` - matches `nil` or `false`
 
 - **String matchers**
   - `starts_with(prefix)` - string prefix matching
@@ -34,6 +41,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `is_greater_than_or_equal_to(n)`
   - `is_less_than(n)`
   - `is_less_than_or_equal_to(n)`
+  - `between(min, max, exclusive: false)` - range check
   - `is_close_to(n, delta)` - floating-point tolerance
 
 - **Collection content matchers**
@@ -47,6 +55,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `all_items(matcher)` - all items must match
   - `some_items(matcher)` - at least one item must match
   - `no_items(matcher)` - no items should match
+  - `all_entries(matcher)` - all hash entries must match
+  - `some_entry(matcher)` - at least one hash entry must match
+  - `no_entry(matcher)` - no hash entries should match
 
 - **Membership matcher**
   - `is_in(collection)` - value membership in arrays, hashes, strings, ranges
@@ -68,7 +79,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Fluent API**
   - `assert_that(actual).equals(expected)`
   - `assert_that(actual).is(expected)`
-  - `assert_that(actual).never(matcher)`
+  - `assert_that(actual).never(matcher)` (aliases: `is_not`, `does_not`)
   - `assert_that(actual).matches(matcher)`
   - `assert_that { block }.raises_error`
   - `assert_that { block }.raises_nothing`
