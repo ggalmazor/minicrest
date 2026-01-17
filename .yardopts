@@ -1,0 +1,8 @@
+--title "Minicrest Documentation"
+--main README.md
+--markup markdown
+lib/**/*.rb
+-
+README.md
+CHANGELOG.md
+LICENSE

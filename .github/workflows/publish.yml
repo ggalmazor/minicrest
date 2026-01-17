@@ -2,7 +2,8 @@ name: Publish Gem
 
 on:
   release:
-    types: [published]
+    types: [ published ]
+  workflow_dispatch:
 
 jobs:
   publish:
