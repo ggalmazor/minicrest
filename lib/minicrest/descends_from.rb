@@ -6,13 +6,14 @@ module Minicrest
   # Uses Ruby's `is_a?` method which checks class hierarchy and module inclusion.
   #
   # @example Basic usage
-  #   is_a(String).matches?("hello")  # => true
-  #   is_a(Integer).matches?(42)      # => true
-  #   is_a(Enumerable).matches?([])   # => true (module inclusion)
+  #   descends_from(String).matches?("hello")  # => true
+  #   descends_from(Integer).matches?(42)      # => true
+  #   descends_from(Enumerable).matches?([])   # => true (module inclusion)
   #
   # @example With inheritance
-  #   is_a(Exception).matches?(StandardError.new)  # => true (subclass)
-  class IsA < Matcher
+  #   descends_from(Exception).matches?(StandardError.new)  # => true (subclass)
+  # @see InstanceOf
+  class DescendsFrom < Matcher
     # Creates a new type matcher.
     #
     # @param expected_type [Class, Module] the expected type
