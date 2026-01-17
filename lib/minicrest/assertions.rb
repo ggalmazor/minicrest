@@ -357,7 +357,7 @@ module Minicrest
     # Factory method for has_attribute() matcher.
     #
     # Checks if an object has a specific attribute.
-    # Works with OpenStruct, objects with attr_reader, and hashes.
+    # Works with objects with attr_reader and hashes.
     #
     # @param name [Symbol] the attribute name
     # @param value_matcher [Matcher, nil] optional matcher for the value

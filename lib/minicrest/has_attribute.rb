@@ -4,7 +4,6 @@ module Minicrest
   # Matcher that checks if an object has a specific attribute.
   #
   # Works with:
-  # - OpenStruct objects
   # - Objects with attr_reader methods
   # - Hashes (with symbol keys)
   #

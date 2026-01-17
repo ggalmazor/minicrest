@@ -373,7 +373,9 @@ assert_that(5).matches(is_in(1..10))            # ranges
 Matches if the object has the attribute, optionally checking its value:
 
 ```ruby
-user = OpenStruct.new(name: "Alice", age: 30)
+User = Struct.new(:name, :age)
+
+user = User.new("Alice", 30)
 
 assert_that(user).matches(has_attribute(:name))
 assert_that(user).matches(has_attribute(:name, equals("Alice")))
