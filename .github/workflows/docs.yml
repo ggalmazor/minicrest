@@ -27,7 +27,9 @@ jobs:
           bundler-cache: true
 
       - name: Generate Yardocs
-        run: bundle exec yard doc
+        run: |
+          bundle exec yard doc
+          bundle exec rake docs:fix
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
