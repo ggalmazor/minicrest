@@ -453,13 +453,13 @@ assert_that { safe_operation }.raises_nothing
 ```
 
 TDD cycles:
-- [ ] Test `raises_error` with any error
-- [ ] Test `raises_error(ErrorClass)` matches class
-- [ ] Test `raises_error(ErrorClass)` fails on wrong class
-- [ ] Test `raises_error(ErrorClass, message_matcher)` matches message
-- [ ] Test `raises_nothing` passes when no error
-- [ ] Test `raises_nothing` fails when error raised
-- [ ] Test failure message includes error details
+- [x] Test `raises_error` with any error
+- [x] Test `raises_error(ErrorClass)` matches class
+- [x] Test `raises_error(ErrorClass)` fails on wrong class
+- [x] Test `raises_error(ErrorClass, message_matcher)` matches message
+- [x] Test `raises_nothing` passes when no error
+- [x] Test `raises_nothing` fails when error raised
+- [x] Test failure message includes error details
 
 ---
 
