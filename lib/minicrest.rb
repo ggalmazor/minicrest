@@ -57,15 +57,13 @@ module Minicrest
     #
     # @example
     #   Minicrest.register_matcher(:greater_than) { |expected| GreaterThan.new(expected) }
-    def register_matcher(name, &block)
+    def register_matcher(name, &)
       raise ArgumentError, 'block required' unless block_given?
 
-      if registered_matchers.include?(name.to_sym)
-        raise Error, "matcher :#{name} is already registered"
-      end
+      raise Error, "matcher :#{name} is already registered" if registered_matchers.include?(name.to_sym)
 
       registered_matchers << name.to_sym
-      Assertions.define_method(name, &block)
+      Assertions.define_method(name, &)
     end
 
     # Returns the list of registered custom matcher names.
@@ -77,33 +75,33 @@ module Minicrest
   end
 end
 
-require_relative "minicrest/matcher"
-require_relative "minicrest/is"
-require_relative "minicrest/is_a"
-require_relative "minicrest/responds_to"
-require_relative "minicrest/equals"
-require_relative "minicrest/starts_with"
-require_relative "minicrest/ends_with"
-require_relative "minicrest/matches_pattern"
-require_relative "minicrest/blank"
-require_relative "minicrest/empty"
-require_relative "minicrest/has_size"
-require_relative "minicrest/is_greater_than"
-require_relative "minicrest/is_greater_than_or_equal_to"
-require_relative "minicrest/is_less_than"
-require_relative "minicrest/is_less_than_or_equal_to"
-require_relative "minicrest/is_close_to"
-require_relative "minicrest/includes"
-require_relative "minicrest/has_key"
-require_relative "minicrest/has_value"
-require_relative "minicrest/contains"
-require_relative "minicrest/contains_exactly"
-require_relative "minicrest/all_items"
-require_relative "minicrest/some_items"
-require_relative "minicrest/no_items"
-require_relative "minicrest/is_in"
-require_relative "minicrest/has_attribute"
-require_relative "minicrest/anything"
-require_relative "minicrest/combinators"
-require_relative "minicrest/asserter"
-require_relative "minicrest/assertions"
+require_relative 'minicrest/matcher'
+require_relative 'minicrest/is'
+require_relative 'minicrest/is_a'
+require_relative 'minicrest/responds_to'
+require_relative 'minicrest/equals'
+require_relative 'minicrest/starts_with'
+require_relative 'minicrest/ends_with'
+require_relative 'minicrest/matches_pattern'
+require_relative 'minicrest/blank'
+require_relative 'minicrest/empty'
+require_relative 'minicrest/has_size'
+require_relative 'minicrest/is_greater_than'
+require_relative 'minicrest/is_greater_than_or_equal_to'
+require_relative 'minicrest/is_less_than'
+require_relative 'minicrest/is_less_than_or_equal_to'
+require_relative 'minicrest/is_close_to'
+require_relative 'minicrest/includes'
+require_relative 'minicrest/has_key'
+require_relative 'minicrest/has_value'
+require_relative 'minicrest/contains'
+require_relative 'minicrest/contains_exactly'
+require_relative 'minicrest/all_items'
+require_relative 'minicrest/some_items'
+require_relative 'minicrest/no_items'
+require_relative 'minicrest/is_in'
+require_relative 'minicrest/has_attribute'
+require_relative 'minicrest/anything'
+require_relative 'minicrest/combinators'
+require_relative 'minicrest/asserter'
+require_relative 'minicrest/assertions'

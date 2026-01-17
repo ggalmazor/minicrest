@@ -1,0 +1,72 @@
+# frozen_string_literal: true
+
+plugins:
+  - rubocop-minitest
+
+AllCops:
+  TargetRubyVersion: 3.1
+  NewCops: enable
+  SuggestExtensions: false
+
+# Test files naturally have long describe/it blocks
+Metrics/BlockLength:
+  Exclude:
+    - 'test/**/*'
+
+# Gemspec required_ruby_version is intentionally broader than development version
+Gemspec/RequiredRubyVersion:
+  Enabled: false
+
+# Matcher factory methods intentionally use is_/has_ prefixes for readability
+# e.g., is_a(), has_size(), is_greater_than() - these are Hamcrest conventions
+Naming/PredicatePrefix:
+  Exclude:
+    - 'lib/minicrest/assertions.rb'
+    - 'lib/minicrest/has_attribute.rb'
+
+# Diff methods are inherently complex but readable as-is
+Metrics/AbcSize:
+  Exclude:
+    - 'lib/minicrest/equals.rb'
+    - 'lib/minicrest/asserter.rb'
+
+Metrics/CyclomaticComplexity:
+  Exclude:
+    - 'lib/minicrest/equals.rb'
+    - 'lib/minicrest/includes.rb'
+    - 'lib/minicrest/asserter.rb'
+
+Metrics/PerceivedComplexity:
+  Exclude:
+    - 'lib/minicrest/equals.rb'
+    - 'lib/minicrest/includes.rb'
+    - 'lib/minicrest/asserter.rb'
+
+Metrics/MethodLength:
+  Exclude:
+    - 'lib/minicrest/equals.rb'
+    - 'lib/minicrest/includes.rb'
+    - 'lib/minicrest/asserter.rb'
+    - 'lib/minicrest/contains_exactly.rb'
+    - 'lib/minicrest/has_attribute.rb'
+
+# Module documentation not required for simple matcher modules
+Style/Documentation:
+  Exclude:
+    - 'lib/minicrest/equals.rb'
+    - 'lib/minicrest/is.rb'
+
+# OpenStruct is fine for test fixtures
+Style/OpenStructUse:
+  Exclude:
+    - 'test/**/*'
+
+# Test helper classes defined in describe blocks are acceptable
+Lint/ConstantDefinitionInBlock:
+  Exclude:
+    - 'test/**/*'
+
+# Test matcher names with numbers are intentional for uniqueness
+Naming/VariableNumber:
+  Exclude:
+    - 'test/**/*'

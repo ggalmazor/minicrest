@@ -39,15 +39,15 @@ module Minicrest
       actual_array = actual.to_a
       lines = ["expected #{actual.inspect} to contain exactly #{@items.inspect} (in order)"]
 
-      if actual_array.length != @items.length
-        lines << "expected size #{@items.length}, got #{actual_array.length}"
-      else
+      if actual_array.length == @items.length
         @items.each_with_index do |expected_item, index|
           actual_item = actual_array[index]
           if expected_item != actual_item
             lines << "at index #{index}: expected #{expected_item.inspect}, got #{actual_item.inspect}"
           end
         end
+      else
+        lines << "expected size #{@items.length}, got #{actual_array.length}"
       end
 
       lines.join("\n")

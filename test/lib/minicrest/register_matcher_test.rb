@@ -71,7 +71,7 @@ describe 'Minicrest.register_matcher' do
       instance = test_class.new
       matcher = instance.gt_callable(5)
 
-      assert matcher.is_a?(Minicrest::Matcher)
+      assert_kind_of Minicrest::Matcher, matcher
       assert matcher.matches?(10)
       refute matcher.matches?(3)
     end
@@ -129,11 +129,13 @@ describe 'Minicrest.register_matcher' do
 
       # AND combinator
       combined = instance.gt_combo(5) & instance.gt_combo(3)
+
       assert combined.matches?(10)
       refute combined.matches?(4)
 
       # OR combinator
       combined = instance.gt_combo(100) | instance.gt_combo(5)
+
       assert combined.matches?(10)
     end
 

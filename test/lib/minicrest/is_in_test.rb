@@ -106,6 +106,7 @@ describe Minicrest::IsIn do
 
     it 'works with | operator' do
       valid_status = is_in(%w[pending active]) | is_in(%w[completed cancelled])
+
       assert valid_status.matches?('active')
       assert valid_status.matches?('completed')
       refute valid_status.matches?('invalid')

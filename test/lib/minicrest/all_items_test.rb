@@ -25,7 +25,8 @@ describe Minicrest::AllItems do
     end
 
     it 'works with combined matchers' do
-      positive_even = is_greater_than(0) & equals(2) | equals(4) | equals(6)
+      positive_even = (is_greater_than(0) & equals(2)) | equals(4) | equals(6)
+
       assert all_items(positive_even).matches?([2, 4, 6])
     end
   end
@@ -52,7 +53,8 @@ describe Minicrest::AllItems do
     end
 
     it 'shows first failing item when multiple fail' do
-      result = all_items(is_a(Integer)).failure_message(['one', 'two', 'three'])
+      result = all_items(is_a(Integer)).failure_message(%w[one two three])
+
       assert_includes result, 'item at index 0 failed'
     end
   end

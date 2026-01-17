@@ -77,6 +77,7 @@ describe Minicrest::IsLessThan do
 
     it 'works with & operator to define a range' do
       in_range = is_greater_than(0) & is_less_than(10)
+
       assert in_range.matches?(5)
       refute in_range.matches?(0)
       refute in_range.matches?(10)

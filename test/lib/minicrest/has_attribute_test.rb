@@ -123,11 +123,13 @@ describe Minicrest::HasAttribute do
 
     it 'works with & operator' do
       adult_admin = has_attribute(:age, is_greater_than(18)) & has_attribute(:admin, equals(true))
+
       assert adult_admin.matches?(user)
     end
 
     it 'works with | operator' do
       has_name_or_email = has_attribute(:name) | has_attribute(:email)
+
       assert has_name_or_email.matches?(user)
     end
   end

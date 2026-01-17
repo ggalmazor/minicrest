@@ -28,7 +28,7 @@ describe Minicrest::MatchesPattern do
 
   describe '#description' do
     it 'describes the expected pattern' do
-      assert_equal matches_pattern(/\d+/).description, 'a string matching /\\d+/'
+      assert_equal 'a string matching /\\d+/', matches_pattern(/\d+/).description
     end
   end
 

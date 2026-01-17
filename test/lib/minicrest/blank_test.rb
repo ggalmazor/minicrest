@@ -34,7 +34,7 @@ describe Minicrest::Blank do
 
   describe '#description' do
     it 'describes blank expectation' do
-      assert_equal blank.description, 'a blank string'
+      assert_equal 'a blank string', blank.description
     end
   end
 

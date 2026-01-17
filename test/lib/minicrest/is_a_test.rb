@@ -34,6 +34,7 @@ describe Minicrest::IsA do
       it 'matches subclass against parent class' do
         # StandardError is a subclass of Exception
         error = StandardError.new('test')
+
         assert is_a(Exception).matches?(error)
       end
 

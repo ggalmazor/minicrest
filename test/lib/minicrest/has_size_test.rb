@@ -56,6 +56,7 @@ describe Minicrest::HasSize do
       it 'works with combined matchers' do
         # Size is greater than 2 AND less than 10
         matcher = has_size(equals(3) | equals(4) | equals(5))
+
         assert matcher.matches?([1, 2, 3])
         assert matcher.matches?([1, 2, 3, 4])
         assert matcher.matches?([1, 2, 3, 4, 5])

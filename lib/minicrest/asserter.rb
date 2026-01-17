@@ -109,11 +109,11 @@ module Minicrest
       begin
         @block.call
         # Block didn't raise - this is a failure
-        if expected_class
-          failure_msg = "expected block to raise #{expected_class}, but no error was raised"
-        else
-          failure_msg = 'expected block to raise an error, but no error was raised'
-        end
+        failure_msg = if expected_class
+                        "expected block to raise #{expected_class}, but no error was raised"
+                      else
+                        'expected block to raise an error, but no error was raised'
+                      end
         failure_msg = "#{@message}: #{failure_msg}" if @message
         raise Minitest::Assertion, failure_msg
       rescue Minitest::Assertion

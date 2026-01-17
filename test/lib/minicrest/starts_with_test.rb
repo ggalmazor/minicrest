@@ -30,7 +30,7 @@ describe Minicrest::StartsWith do
 
   describe '#description' do
     it 'describes the expected prefix' do
-      assert_equal starts_with('hello').description, 'a string starting with "hello"'
+      assert_equal 'a string starting with "hello"', starts_with('hello').description
     end
   end
 

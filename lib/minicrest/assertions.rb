@@ -40,8 +40,8 @@ module Minicrest
     # @example With block for error assertions
     #   assert_that { raise "boom" }.raises_error
     #   assert_that { safe_operation }.raises_nothing
-    def assert_that(actual = nil, message = nil, &block)
-      Asserter.new(actual, message, &block)
+    def assert_that(actual = nil, message = nil, &)
+      Asserter.new(actual, message, &)
     end
 
     # Factory method for equals() matcher.

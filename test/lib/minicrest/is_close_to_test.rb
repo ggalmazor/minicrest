@@ -87,6 +87,7 @@ describe Minicrest::IsCloseTo do
 
     it 'works with | operator' do
       pi_or_e = is_close_to(3.14159, 0.001) | is_close_to(2.71828, 0.001)
+
       assert pi_or_e.matches?(3.14159)
       assert pi_or_e.matches?(2.71828)
       refute pi_or_e.matches?(1.0)
