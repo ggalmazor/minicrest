@@ -4,5 +4,6 @@
 lib/**/*.rb
 -
 README.md
+USAGE.md
 CHANGELOG.md
 LICENSE

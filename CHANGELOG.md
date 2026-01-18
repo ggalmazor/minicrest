@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.20] - 2026-01-18
+
+### Changed
+- Reorganized documentation: extracted detailed usage into `USAGE.md` and added Table of Contents.
+- Internal refactoring: moved `DescendsFrom` to `value_matchers.rb` and consolidated type matchers.
+
+### Fixed
+- Added missing tests for `NilValue`, `Truthy`, `Falsy`, and `InstanceOf` matchers.
+
 ## [1.0.0 - 1.0.19] - 2026-01-18
 
 - Housekeeping: automate CI and release workflows
