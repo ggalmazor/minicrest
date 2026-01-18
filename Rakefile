@@ -71,6 +71,9 @@ namespace :docs do
       # Inject version into title if it's the standard "Minicrest Documentation"
       content.gsub!('Minicrest Documentation', "Minicrest v#{version} Documentation")
 
+      # Inject version into the #menu element for better visibility
+      content.gsub!(/<div id="menu">/, "<div id=\"menu\">\n  <span class=\"version\">v#{version}</span>")
+
       # YARD uses relative paths like "", "Minicrest", "Minicrest/SomeSubClass"
       # We want to find href="../something.html" and replace it with base_url + something.html
 

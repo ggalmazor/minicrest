@@ -7,56 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [1.0.13] - 2026-01-18
+## [1.0.15] - 2026-01-18
 
--Housekeeping: run CI before releasing gem & docs
+- Documentation: add gem version to the `#menu` element for better visibility
 
-## [1.0.12] - 2026-01-18
+## [1.0.0 - 1.0.14] - 2026-01-18
 
-- Change release and documentation workflow triggers to run directly on tag push instead of waiting for CI completion
-
-## [1.0.11] - 2026-01-18
-
-- Fix release workflow trigger and gating logic
-
-## [1.0.10] - 2026-01-18
-
-- Dummy release to verify the automated publishing workflow
-
-## [1.0.7] - 2026-01-17
-
-- Housekeeping: restrict automated publishing to only run when CI succeeds for a version tag
-
-## [1.0.6] - 2026-01-17
-
-- Housekeeping: switch to Trusted Publishing (OIDC) for RubyGems
-- Housekeeping: fix documentation link duplication when hosted at a subpath
-- Housekeeping: migrate documentation post-processing to a Rake task
-- Housekeeping: configure publish workflow to allow manual tagging
-
-## [1.0.5] - 2026-01-17
-
-- Housekeeping: switch to Trusted Publishing (OIDC) for RubyGems
-- Housekeeping: fix documentation link duplication when hosted at a subpath
-- Housekeeping: migrate documentation post-processing to a Rake task
-- Housekeeping: configure publish workflow to allow manual tagging
-
-## [1.0.4] - 2026-01-17
-
-- Housekeeping: tuning the publish GH workflow for automated releases to Rubygems
-- Housekeeping: add bundler gem tasks to Rakefile for automated releases
-
-## [1.0.3] - 2026-01-17
-
-- Housekeeping: tuning the publish GH workflow for automated releases to Rubygems
-
-## [1.0.2] - 2026-01-17
-
-- Housekeeping: add version to published yard docs
-
-## [1.0.1] - 2026-01-17
-
-- Housekeeping: tuning the publish GH workflow for automated releases to Rubygems
+- Housekeeping: automate CI and release workflows
 
 ## [1.0.0] - 2026-01-17
 
