@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.10] - 2026-01-18
+
+- Dummy release to verify the automated publishing workflow
+
 ## [1.0.7] - 2026-01-17
 
 - Housekeeping: restrict automated publishing to only run when CI succeeds for a version tag
