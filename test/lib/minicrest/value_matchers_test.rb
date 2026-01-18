@@ -6,6 +6,61 @@ require_relative '../../../lib/minicrest'
 describe Minicrest::DescendsFrom do
   include Minicrest::Assertions
 
+  describe 'NilValue' do
+    it 'matches nil' do
+      assert nil_value.matches?(nil)
+    end
+
+    it 'does not match non-nil' do
+      refute nil_value.matches?(42)
+    end
+
+    it 'describes itself' do
+      assert_equal 'nil', nil_value.description
+    end
+
+    it 'provides failure messages' do
+      assert_equal 'expected 42 to be nil', nil_value.failure_message(42)
+      assert_equal 'expected nil not to be nil, but it was', nil_value.negated_failure_message(nil)
+    end
+  end
+
+  describe 'Truthy' do
+    it 'matches true-ish values' do
+      assert truthy.matches?(true)
+      assert truthy.matches?(42)
+      assert truthy.matches?('hello')
+    end
+
+    it 'does not match false-ish values' do
+      refute truthy.matches?(false)
+      refute truthy.matches?(nil)
+    end
+  end
+
+  describe 'Falsy' do
+    it 'matches false-ish values' do
+      assert falsy.matches?(false)
+      assert falsy.matches?(nil)
+    end
+
+    it 'does not match true-ish values' do
+      refute falsy.matches?(true)
+      refute falsy.matches?(42)
+    end
+  end
+
+  describe 'InstanceOf' do
+    it 'matches exact class' do
+      assert instance_of(String).matches?('hello')
+    end
+
+    it 'does not match subclass' do
+      # Numeric is a parent of Integer, but Integer is not exactly Numeric
+      refute instance_of(Numeric).matches?(42)
+    end
+  end
+
   describe '#matches?' do
     describe 'with exact class match' do
       it 'matches String' do

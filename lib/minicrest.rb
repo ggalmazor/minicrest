@@ -77,7 +77,6 @@ end
 
 require_relative 'minicrest/matcher'
 require_relative 'minicrest/is'
-require_relative 'minicrest/descends_from'
 require_relative 'minicrest/value_matchers'
 require_relative 'minicrest/responds_to'
 require_relative 'minicrest/equals'
