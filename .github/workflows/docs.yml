@@ -1,11 +1,8 @@
-name: Release docs
+name: Documentation
 
 on:
-  push:
-    branches:
-      - main
-    tags:
-      - 'v*'
+  release:
+    types: [ published ]
   workflow_dispatch:
 
 permissions:
@@ -30,7 +27,7 @@ jobs:
       - name: Run tests
         run: bundle exec rake
 
-  publish:
+  deploy:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
