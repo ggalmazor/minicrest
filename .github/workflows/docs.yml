@@ -17,7 +17,6 @@ jobs:
     strategy:
       matrix:
         ruby-version: [ '3.4' ]
-
     steps:
       - uses: actions/checkout@v4
       - name: Set up Ruby
@@ -29,6 +28,7 @@ jobs:
         run: bundle exec rake
 
   deploy:
+    needs: test
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -36,26 +36,21 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.4'
           bundler-cache: true
-
       - name: Generate Yardocs
         run: |
           bundle exec yard doc
           bundle exec rake docs:fix
-
       - name: Setup Pages
         uses: actions/configure-pages@v4
-
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: 'doc'
-
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
