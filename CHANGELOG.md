@@ -7,11 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [1.0.15] - 2026-01-18
-
-- Documentation: add gem version to the `#menu` element for better visibility
-
-## [1.0.0 - 1.0.14] - 2026-01-18
+## [1.0.0 - 1.0.16] - 2026-01-18
 
 - Housekeeping: automate CI and release workflows
 
