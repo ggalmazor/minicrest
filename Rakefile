@@ -63,6 +63,10 @@ namespace :docs do
     # 2. Convert all relative links to absolute links in HTML files and inject version
     puts "Converting relative links to absolute and injecting version #{version} in #{doc_dir}..."
 
+    extra_files_mapping = {
+      'USAGE_md.html' => 'file.USAGE.html',
+    }
+
     Find.find(doc_dir) do |path|
       next unless path.end_with?('.html')
 
@@ -81,11 +85,27 @@ namespace :docs do
         attr = $1
         url = $2
 
-        # Skip absolute URLs, anchors, and data URIs
-        if url.start_with?('http://', 'https://', '#', 'data:') || url.empty?
+        # If it's an absolute URL starting with our base_url, we might need to fix it
+        if url.start_with?(base_url)
+          relative_part = url.sub(base_url, '')
+          if extra_files_mapping.key?(relative_part)
+            "#{attr}=\"#{base_url}#{extra_files_mapping[relative_part]}\""
+          else
+            match
+          end
+        # Skip other absolute URLs, anchors, and data URIs
+        elsif url.start_with?('http://', 'https://', '#', 'data:') || url.empty?
           match
         else
-          absolute_file_path = File.expand_path(url, File.dirname(path))
+          # Fix links to extra files that YARD renames
+          target_url = extra_files_mapping[url] || url
+
+          # If it's one of our extra files, it's at the root of doc/
+          if extra_files_mapping.key?(url)
+            absolute_file_path = File.join(File.expand_path(doc_dir), target_url)
+          else
+            absolute_file_path = File.expand_path(target_url, File.dirname(path))
+          end
 
           if absolute_file_path.start_with?(File.expand_path(doc_dir))
             relative_to_doc_root = absolute_file_path.sub(File.expand_path(doc_dir) + '/', '')

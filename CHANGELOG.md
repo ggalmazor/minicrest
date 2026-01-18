@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.21] - 2026-01-18
+
+### Fixed
+- Improved `docs:fix` task to handle more YARD-transformed filenames (like `README_md.html`, `USAGE_md.html`, etc.) and ensure they are correctly mapped to their final `file.*.html` counterparts.
+
 ## [1.0.20] - 2026-01-18
 
 ### Changed
