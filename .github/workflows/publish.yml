@@ -1,8 +1,6 @@
 name: Publish Gem
 
 on:
-  release:
-    types: [ published ]
   workflow_run:
     workflows: ["CI"]
     types:
@@ -11,7 +9,11 @@ on:
 
 jobs:
   publish:
-    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
+    if: |
+      github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'workflow_run' && 
+       github.event.workflow_run.conclusion == 'success' && 
+       startsWith(github.event.workflow_run.head_branch, 'v'))
     runs-on: ubuntu-latest
     environment: release
     permissions:
