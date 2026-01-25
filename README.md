@@ -1,6 +1,6 @@
 # Minicrest
 
-[![CI](https://github.com/ggalmazor/minicrest/actions/workflows/ci.yml/badge.svg)](https://github.com/ggalmazor/minicrest/actions/workflows/ci.yml)
+[![CI](https://github.com/ggalmazor/minicrest/actions/workflows/ci.yml/badge.svg)](https://github.com/ggalmazor/minicrest/actions/workflows/ci.yml) [![Release](https://github.com/ggalmazor/minicrest/actions/workflows/release.yml/badge.svg)](https://github.com/ggalmazor/minicrest/actions/workflows/release.yml)
 
 Hamcrest-style composable matchers for Minitest. Write expressive, readable assertions with detailed failure messages.
 
