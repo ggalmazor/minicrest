@@ -3,6 +3,7 @@
 ## Table of Contents
 
 - [Basic Usage](#basic-usage)
+- [Choosing an Assertion Style](#choosing-an-assertion-style)
 - [Core Matchers](#core-matchers)
   - [Value Equality](#value-equality)
   - [Reference Equality](#reference-equality)
@@ -40,6 +41,33 @@ class MyTest < Minitest::Test
     assert_that(42).equals(42)
   end
 end
+```
+
+## Choosing an Assertion Style
+
+Every matcher can be invoked three ways. Pick the one that reads most naturally:
+
+Use direct fluent matcher methods when they read naturally:
+
+```ruby
+assert_that("hello").starts_with("hello")
+assert_that([1, 2, 3]).includes(2, 3)
+assert_that(user).has_attribute(:name)
+```
+
+Use `.is(...)` when the matcher reads as a predicate or noun phrase:
+
+```ruby
+assert_that(nil).is(nil_value)
+assert_that(value).is(truthy)
+assert_that(items).is(empty)
+assert_that(number).is(between(1, 10))
+```
+
+Keep `.matches(...)` for composed matcher expressions:
+
+```ruby
+assert_that(status).matches(equals(:success) | equals(:pending))
 ```
 
 ## Core Matchers
@@ -100,7 +128,7 @@ Matches if the value is an instance of the expected type (including inheritance)
 
 ```ruby
 assert_that("hello").matches(is_a(String))
-assert_that(42).matches(descends_from(Integer))
+assert_that(42).descends_from(Integer)
 assert_that([]).matches(is_a(Enumerable)) # works with modules
 ```
 
@@ -109,7 +137,7 @@ assert_that([]).matches(is_a(Enumerable)) # works with modules
 Matches if the value is an exact instance of the expected class (no inheritance):
 
 ```ruby
-assert_that("hello").matches(instance_of(String))
+assert_that("hello").instance_of(String)
 assert_that(42).never(instance_of(Numeric)) # Integer is a Numeric, but not exactly InstanceOf Numeric
 ```
 
@@ -118,8 +146,8 @@ assert_that(42).never(instance_of(Numeric)) # Integer is a Numeric, but not exac
 Matches if the value responds to all specified methods:
 
 ```ruby
-assert_that("hello").matches(responds_to(:upcase))
-assert_that([]).matches(responds_to(:push, :pop))
+assert_that("hello").responds_to(:upcase)
+assert_that([]).responds_to(:push, :pop)
 ```
 
 ## Value Matchers
@@ -129,7 +157,7 @@ assert_that([]).matches(responds_to(:push, :pop))
 Matches if the value is `nil`:
 
 ```ruby
-assert_that(nil).matches(nil_value)
+assert_that(nil).is(nil_value)
 assert_that(42).never(nil_value)
 ```
 
@@ -138,9 +166,9 @@ assert_that(42).never(nil_value)
 Matches if the value is considered true (anything except `nil` or `false`):
 
 ```ruby
-assert_that(true).matches(truthy)
-assert_that(42).matches(truthy)
-assert_that("hello").matches(truthy)
+assert_that(true).is(truthy)
+assert_that(42).is(truthy)
+assert_that("hello").is(truthy)
 ```
 
 ### `falsy`
@@ -148,8 +176,8 @@ assert_that("hello").matches(truthy)
 Matches if the value is considered false (`nil` or `false`):
 
 ```ruby
-assert_that(false).matches(falsy)
-assert_that(nil).matches(falsy)
+assert_that(false).is(falsy)
+assert_that(nil).is(falsy)
 ```
 
 ## String Matchers
@@ -157,20 +185,20 @@ assert_that(nil).matches(falsy)
 ### `starts_with(prefix)`
 
 ```ruby
-assert_that("hello world").matches(starts_with("hello"))
+assert_that("hello world").starts_with("hello")
 ```
 
 ### `ends_with(suffix)`
 
 ```ruby
-assert_that("hello world").matches(ends_with("world"))
+assert_that("hello world").ends_with("world")
 ```
 
 ### `matches_pattern(regex)`
 
 ```ruby
-assert_that("hello123").matches(matches_pattern(/\d+/))
-assert_that("test@example.com").matches(matches_pattern(/\A[\w.]+@[\w.]+\z/))
+assert_that("hello123").matches_pattern(/\d+/)
+assert_that("test@example.com").matches_pattern(/\A[\w.]+@[\w.]+\z/)
 ```
 
 ### `blank`
@@ -178,9 +206,9 @@ assert_that("test@example.com").matches(matches_pattern(/\A[\w.]+@[\w.]+\z/))
 Matches empty or whitespace-only strings:
 
 ```ruby
-assert_that("").matches(blank)
-assert_that("   ").matches(blank)
-assert_that("\t\n").matches(blank)
+assert_that("").is(blank)
+assert_that("   ").is(blank)
+assert_that("\t\n").is(blank)
 ```
 
 ## Size and Emptiness Matchers
@@ -190,9 +218,9 @@ assert_that("\t\n").matches(blank)
 Matches empty strings, arrays, or hashes:
 
 ```ruby
-assert_that("").matches(empty)
-assert_that([]).matches(empty)
-assert_that({}).matches(empty)
+assert_that("").is(empty)
+assert_that([]).is(empty)
+assert_that({}).is(empty)
 ```
 
 ### `has_size(expected)`
@@ -200,12 +228,12 @@ assert_that({}).matches(empty)
 Matches values with a specific size:
 
 ```ruby
-assert_that("hello").matches(has_size(5))
-assert_that([1, 2, 3]).matches(has_size(3))
-assert_that({ a: 1, b: 2 }).matches(has_size(2))
+assert_that("hello").has_size(5)
+assert_that([1, 2, 3]).has_size(3)
+assert_that({ a: 1, b: 2 }).has_size(2)
 
 # Can use matchers for flexible size checks
-assert_that([1, 2, 3]).matches(has_size(is_greater_than(2)))
+assert_that([1, 2, 3]).has_size(is_greater_than(2))
 ```
 
 ## Numeric Comparison Matchers
@@ -213,27 +241,27 @@ assert_that([1, 2, 3]).matches(has_size(is_greater_than(2)))
 ### `is_greater_than(expected)`
 
 ```ruby
-assert_that(5).matches(is_greater_than(3))
+assert_that(5).is_greater_than(3)
 ```
 
 ### `is_greater_than_or_equal_to(expected)`
 
 ```ruby
-assert_that(5).matches(is_greater_than_or_equal_to(5))
-assert_that(6).matches(is_greater_than_or_equal_to(5))
+assert_that(5).is_greater_than_or_equal_to(5)
+assert_that(6).is_greater_than_or_equal_to(5)
 ```
 
 ### `is_less_than(expected)`
 
 ```ruby
-assert_that(3).matches(is_less_than(5))
+assert_that(3).is_less_than(5)
 ```
 
 ### `is_less_than_or_equal_to(expected)`
 
 ```ruby
-assert_that(5).matches(is_less_than_or_equal_to(5))
-assert_that(4).matches(is_less_than_or_equal_to(5))
+assert_that(5).is_less_than_or_equal_to(5)
+assert_that(4).is_less_than_or_equal_to(5)
 ```
 
 ### `between(min, max, exclusive: false)`
@@ -241,7 +269,7 @@ assert_that(4).matches(is_less_than_or_equal_to(5))
 Matches if the value is within the range:
 
 ```ruby
-assert_that(5).matches(between(1, 10))
+assert_that(5).is(between(1, 10))
 assert_that(10).never(between(1, 10, exclusive: true))
 ```
 
@@ -250,8 +278,8 @@ assert_that(10).never(between(1, 10, exclusive: true))
 Floating-point equality with tolerance:
 
 ```ruby
-assert_that(3.14159).matches(is_close_to(3.14, 0.01))
-assert_that(10.0).matches(is_close_to(10.5, 0.5))
+assert_that(3.14159).is_close_to(3.14, 0.01)
+assert_that(10.0).is_close_to(10.5, 0.5)
 ```
 
 ## Collection Content Matchers
@@ -262,13 +290,13 @@ Matches if the value contains all specified items:
 
 ```ruby
 # Strings: contains substrings
-assert_that("hello world").matches(includes("hello", "world"))
+assert_that("hello world").includes("hello", "world")
 
 # Arrays: contains elements
-assert_that([1, 2, 3, 4]).matches(includes(2, 4))
+assert_that([1, 2, 3, 4]).includes(2, 4)
 
 # Hashes: contains key-value pairs
-assert_that({ a: 1, b: 2, c: 3 }).matches(includes(a: 1, c: 3))
+assert_that({ a: 1, b: 2, c: 3 }).includes(a: 1, c: 3)
 ```
 
 ### `has_key(*keys)`
@@ -276,8 +304,8 @@ assert_that({ a: 1, b: 2, c: 3 }).matches(includes(a: 1, c: 3))
 Matches if the hash contains all specified keys:
 
 ```ruby
-assert_that({ a: 1, b: 2 }).matches(has_key(:a))
-assert_that({ a: 1, b: 2 }).matches(has_key(:a, :b))
+assert_that({ a: 1, b: 2 }).has_key(:a)
+assert_that({ a: 1, b: 2 }).has_key(:a, :b)
 ```
 
 ### `has_value(*values)`
@@ -285,8 +313,8 @@ assert_that({ a: 1, b: 2 }).matches(has_key(:a, :b))
 Matches if the hash contains all specified values:
 
 ```ruby
-assert_that({ a: 1, b: 2 }).matches(has_value(1))
-assert_that({ a: 1, b: 2 }).matches(has_value(1, 2))
+assert_that({ a: 1, b: 2 }).has_value(1)
+assert_that({ a: 1, b: 2 }).has_value(1, 2)
 ```
 
 ### `contains(*items)`
@@ -294,8 +322,8 @@ assert_that({ a: 1, b: 2 }).matches(has_value(1, 2))
 Matches if the collection contains exactly the specified items in any order:
 
 ```ruby
-assert_that([3, 1, 2]).matches(contains(1, 2, 3))
-assert_that({ b: 2, a: 1 }).matches(contains(a: 1, b: 2))
+assert_that([3, 1, 2]).contains(1, 2, 3)
+assert_that({ b: 2, a: 1 }).contains(a: 1, b: 2)
 ```
 
 ### `contains_exactly(*items)`
@@ -303,7 +331,7 @@ assert_that({ b: 2, a: 1 }).matches(contains(a: 1, b: 2))
 Matches if the array contains exactly the specified items in order:
 
 ```ruby
-assert_that([1, 2, 3]).matches(contains_exactly(1, 2, 3))
+assert_that([1, 2, 3]).contains_exactly(1, 2, 3)
 ```
 
 ## Collection Item Matchers
@@ -313,8 +341,8 @@ assert_that([1, 2, 3]).matches(contains_exactly(1, 2, 3))
 Matches if all items in the collection match:
 
 ```ruby
-assert_that([2, 4, 6]).matches(all_items(descends_from(Integer)))
-assert_that([2, 4, 6]).matches(all_items(is_greater_than(0)))
+assert_that([2, 4, 6]).all_items(descends_from(Integer))
+assert_that([2, 4, 6]).all_items(is_greater_than(0))
 ```
 
 ### `some_items(matcher)`
@@ -322,7 +350,7 @@ assert_that([2, 4, 6]).matches(all_items(is_greater_than(0)))
 Matches if at least one item matches:
 
 ```ruby
-assert_that([1, "two", 3]).matches(some_items(descends_from(String)))
+assert_that([1, "two", 3]).some_items(descends_from(String))
 ```
 
 ### `no_items(matcher)`
@@ -330,7 +358,7 @@ assert_that([1, "two", 3]).matches(some_items(descends_from(String)))
 Matches if no items match:
 
 ```ruby
-assert_that([1, 2, 3]).matches(no_items(descends_from(String)))
+assert_that([1, 2, 3]).no_items(descends_from(String))
 ```
 
 ### `all_entries(matcher)` / `some_entry(matcher)` / `no_entry(matcher)`
@@ -339,10 +367,10 @@ Similar to item matchers, but specifically for hash entries (key-value pairs):
 
 ```ruby
 # all_entries expects a matcher that works with [key, value] arrays
-assert_that({ a: 1, b: 2 }).matches(all_entries(includes(:a, :b) | includes(1, 2)))
+assert_that({ a: 1, b: 2 }).all_entries(includes(:a, :b) | includes(1, 2))
 
 # You can also use a Proc for more complex entry matching
-assert_that({ a: 1, b: 2 }).matches(some_entry(->(entry) { entry[1] > 1 }))
+assert_that({ a: 1, b: 2 }).some_entry(->(entry) { entry[1] > 1 })
 ```
 
 ## Membership Matcher
@@ -352,10 +380,10 @@ assert_that({ a: 1, b: 2 }).matches(some_entry(->(entry) { entry[1] > 1 }))
 Matches if the value is present in the collection:
 
 ```ruby
-assert_that(2).matches(is_in([1, 2, 3]))
-assert_that(:a).matches(is_in({ a: 1, b: 2 }))  # checks keys
-assert_that("el").matches(is_in("hello"))       # substring
-assert_that(5).matches(is_in(1..10))            # ranges
+assert_that(2).is_in([1, 2, 3])
+assert_that(:a).is_in({ a: 1, b: 2 })  # checks keys
+assert_that("el").is_in("hello")       # substring
+assert_that(5).is_in(1..10)            # ranges
 ```
 
 ## Object Attribute Matcher
@@ -369,12 +397,12 @@ User = Struct.new(:name, :age)
 
 user = User.new("Alice", 30)
 
-assert_that(user).matches(has_attribute(:name))
-assert_that(user).matches(has_attribute(:name, equals("Alice")))
-assert_that(user).matches(has_attribute(:age, is_greater_than(18)))
+assert_that(user).has_attribute(:name)
+assert_that(user).has_attribute(:name, equals("Alice"))
+assert_that(user).has_attribute(:age, is_greater_than(18))
 
 # Also works with hashes
-assert_that({ name: "Bob" }).matches(has_attribute(:name, equals("Bob")))
+assert_that({ name: "Bob" }).has_attribute(:name, equals("Bob"))
 ```
 
 ## Error Assertions
