@@ -6,7 +6,7 @@ gem 'minitest'
 
 group :development, :test do
   gem 'rake', '~> 13.2'
-  gem 'rdoc', '~> 7.1'
+  gem 'rdoc', '~> 8.0'
   gem 'rubocop', '~> 1.82'
   gem 'rubocop-minitest', '~> 0.39.1'
   gem 'webrick', '~> 1.9'
