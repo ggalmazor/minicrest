@@ -8,7 +8,7 @@ group :development, :test do
   gem 'rake', '~> 13.2'
   gem 'rdoc', '~> 8.0'
   gem 'rubocop', '~> 1.82'
-  gem 'rubocop-minitest', '~> 0.40.0'
+  gem 'rubocop-minitest', '~> 0.41.0'
   gem 'webrick', '~> 1.9'
   gem 'yard', '~> 0.9.38'
 end
